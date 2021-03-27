@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const userSchema = mongoose.Schema({
+const movieSchema = mongoose.Schema({
     title: String,
     year: Number,
     available: Boolean,
 })
 
-const movie = mongoose.model('movies', userSchema)
+const movie = mongoose.model('movies', movieSchema)
 
 export default movie;
