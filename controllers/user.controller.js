@@ -1,15 +1,24 @@
 import user from '../models/user.model.js';
 
 export const userController = {
-    list: async (req, res) => {
+    listUsers: async (req, res) => {
         console.log(`endpoint: /user`);
 
         const resUsers = await user.find();
         res.json(resUsers);
-        // res.send("It Works!");
+    },
+    findUser: async (req, res) => {
+        console.log(`endpoint: /user/:id`);
+
+        const query = req.params.id;
+        const resUser = await user.findById(query);
+        res.json(resUser)
     },
 
-    create: () => {
-        // Aquí va la lógica del create
+    createUser: async (req, res) => {
+        console.log('endpoint: /user');
+
+        await user.create(req.body);
+        res.send(`User ${JSON.stringify(req.body)} was added`)
     }
 }

@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user.controller.js';
 
-// Crear el enroutador
 const userRoutes = Router();
 
-// Todo esto lleva el /user delante
-userRoutes.get("/", userController.list);
+userRoutes.get("/", userController.listUsers);
+userRoutes.get("/:id", userController.findUser);
+userRoutes.post("/", userController.createUser);
+// userRoutes.delete("/:id", userController.deleteUser);
 
 export default userRoutes;
