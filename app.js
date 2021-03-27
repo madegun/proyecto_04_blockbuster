@@ -2,30 +2,31 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose'
 import userRoutes from './routes/user.routes.js';
+import connectDatabase from './config/connection_db.js';
 // import orderRoutes from './routes/order.routes.js';
+import dotenv from 'dotenv';
 
-// Iniziatilze express
+// Init express
 const app = express();
+
+// Init dotenv
+dotenv.config();
 
 // Able to receive JSON on body request
 app.use(express.json());
+
+// App port
 const port = 3000;
 
 // Connection to mongodb
-try {
-    await mongoose.connect('mongodb://localhost:27017/blockbuster', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false
-    })
-    console.log('mongodb connected');
-} catch (e) {
-    console.log(e);
-}
+const urlDB = process.env.URL_DB;
+const portDB = process.env.PORT_DB;
+const nameDB = process.env.NAME_DB;
+
+connectDatabase(urlDB, portDB, nameDB);
 
 // CORS
-app.use(cors());
+// app.use(cors());
 
 // Middleware => Nos muestra la fecha, el tipo de petición y la url a la que se ha hecho una petición.
 app.use((req, res, next) => {

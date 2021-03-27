@@ -16,9 +16,16 @@ export const userController = {
     },
 
     createUser: async (req, res) => {
-        console.log('endpoint: /user');
+        console.log(`endpoint: /user`);
 
         await user.create(req.body);
         res.send(`User ${JSON.stringify(req.body)} was added`)
+    },
+
+    deleteUser: async (req, res) => {
+        console.log(`endpoint: /user`)
+
+        await user.findByIdAndDelete(req.params.id);
+        res.send(`User with id ${JSON.stringify(req.params.id)} was deleted`)
     }
 }
