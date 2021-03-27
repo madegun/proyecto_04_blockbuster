@@ -1,7 +1,8 @@
 import express from 'express';
-import cors from 'cors';
-import mongoose from 'mongoose'
+// import cors from 'cors';
+// import mongoose from 'mongoose'
 import userRoutes from './routes/user.routes.js';
+import movieRoutes from './routes/movies.routes.js';
 import connectDatabase from './config/connection_db.js';
 // import orderRoutes from './routes/order.routes.js';
 import dotenv from 'dotenv';
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
 // Esto es un master route.
 app.use('/user', userRoutes);
+app.use('/movie', movieRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
