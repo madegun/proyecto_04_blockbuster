@@ -1,4 +1,5 @@
 import order from '../models/order.model.js';
+// import dotenv from 'dotenv';
 
 export const orderController = {
     listOrders: async (req, res) => {
@@ -8,16 +9,29 @@ export const orderController = {
         res.json(resOrders);
     },
 
-    createOrder: (req, res) => {
-        function addDays(date, days) {
-            var result = new Date(date);
-            result.setDate(result.getDate() + days);
-            return result;
-        }
+    createOrder: async (req, res) => {
+
+        const movieId = req.body.movieId;
+        const userId = req.body.userId;
+
         const startDate = new Date();
-        const endDate = addDays(startDate, 3);
-        var i = `${startDate} : ${endDate}`;
-        res.send(i);
+        const days = parseInt(process.env.BASIC_ORDER);
+
+        const getEndDate = () => {
+            let endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + days);
+            return endDate;
+        };
+
+        const newOrder = {
+            userId: userId,
+            movieId: movieId,
+            startDate: startDate,
+            endDate: getEndDate(),
+        }
+
+        await order.create(newOrder);
+        res.json(`Order ${JSON.stringify(newOrder)} was created`);
     }
 }
 
