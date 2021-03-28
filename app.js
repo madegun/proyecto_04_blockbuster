@@ -4,6 +4,8 @@ import express from 'express';
 import userRoutes from './routes/user.routes.js';
 import movieRoutes from './routes/movies.routes.js';
 import orderRoutes from './routes/order.routes.js';
+
+import authRoutes from './routes/auth.routes.js';
 import connectDatabase from './config/connection_db.js';
 // import orderRoutes from './routes/order.routes.js';
 import dotenv from 'dotenv';
@@ -39,7 +41,14 @@ app.use((req, res, next) => {
     next();
 })
 
+
+// La garita
+app.use('/auth', authRoutes);
+
 // Esto es un master route.
+// app.use('/user', checkJWT, userRoutes);
+
+// Master route
 app.use('/user', userRoutes);
 app.use('/movie', movieRoutes);
 app.use('/order', orderRoutes);
