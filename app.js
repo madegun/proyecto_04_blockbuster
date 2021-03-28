@@ -10,6 +10,8 @@ import connectDatabase from './config/connection_db.js';
 // import orderRoutes from './routes/order.routes.js';
 import dotenv from 'dotenv';
 
+import checkJWT from './middlewares/jwt.js';
+
 // Init express
 const app = express();
 
@@ -49,7 +51,7 @@ app.use('/auth', authRoutes);
 // app.use('/user', checkJWT, userRoutes);
 
 // Master route
-app.use('/user', userRoutes);
+app.use('/user', checkJWT, userRoutes);
 app.use('/movie', movieRoutes);
 app.use('/order', orderRoutes);
 

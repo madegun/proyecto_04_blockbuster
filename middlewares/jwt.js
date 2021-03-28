@@ -11,13 +11,20 @@ const checkJWT = async (req, res, next) => {
         const email = payload.email;
         const user = await User.findOne({ "email": email });
 
+        // console.log(user.username);
         // console.log(email);
-        // console.log(user.email);
+        // console.log(typeof String(user.roleId));
 
-        // Verifica si el email está en la base de datos.
+        // Haciendo uso de roles:
+        // admin: 605e3c1727c76e28fd4ae7d0
+        // user: 605e3c2f27c76e28fd4ae7e8
+
+        // check if admin
         if (user.email === null) {
             displayGandalf(req, res);
-        } else if (user.email === email) {
+        } else if (String(user.roleId) !== "605e3c1727c76e28fd4ae7d0") {
+            displayGandalf(req, res);
+        } else {
             next();
         }
 
