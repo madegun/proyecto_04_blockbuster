@@ -11,18 +11,12 @@ const checkJWT = async (req, res, next) => {
         const email = payload.email;
         const user = await User.findOne({ "email": email });
 
-        // console.log(user.username);
-        // console.log(email);
-        // console.log(typeof String(user.roleId));
-
-        // Haciendo uso de roles:
-        // admin: 605e3c1727c76e28fd4ae7d0
-        // user: 605e3c2f27c76e28fd4ae7e8
+        const adminRoleId = process.env.ADMIN_ROLE_ID;
 
         // check if admin
         if (user.email === null) {
             displayGandalf(req, res);
-        } else if (String(user.roleId) !== "605e3c1727c76e28fd4ae7d0") {
+        } else if (String(user.roleId) !== adminRoleId) {
             displayGandalf(req, res);
         } else {
             next();
