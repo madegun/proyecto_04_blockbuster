@@ -11,12 +11,12 @@ import displayGandalf from '../utils/displayGandalf.js';
 //         const email = payload.email;
 //         const user = await User.findOne({ "email": email });
 
-//         const adminRoleId = process.env.ADMIN_ROLE_ID;
+//         // const adminRoleId = process.env.ADMIN_ROLE_ID;
 
-//         // check if admin
+//         // check if user or admin exists
 //         if (user.email === null) {
 //             displayGandalf(req, res);
-//         } else if (String(user.roleId) !== adminRoleId) {
+//         } else if (String(user.email) !== adminRoleId) {
 //             displayGandalf(req, res);
 //         } else {
 //             next();
@@ -27,5 +27,5 @@ import displayGandalf from '../utils/displayGandalf.js';
 //         // res.sendStatus(401);
 //     }
 // }
-//
+
 // export default checkJWT;

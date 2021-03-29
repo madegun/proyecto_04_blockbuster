@@ -4,6 +4,7 @@ import express from 'express';
 import userRoutes from './routes/user.routes.js';
 import movieRoutes from './routes/movies.routes.js';
 import orderRoutes from './routes/order.routes.js';
+import signinRoutes from './routes/signin.routes.js';
 
 import authRoutes from './routes/auth.routes.js';
 import connectDatabase from './config/connection_db.js';
@@ -43,14 +44,17 @@ app.use((req, res, next) => {
     next();
 })
 
+// Single signin endpoint. No middlewares needed.
+app.use('/signin', signinRoutes);
 
-// La garita
+// Once you have registered, you can get a JWT.
 app.use('/auth', authRoutes);
 
 // Esto es un master route.
 // app.use('/user', checkJWT, userRoutes);
 
 // Master route. 
+
 app.use('/user', userRoutes);
 app.use('/movie', movieRoutes);
 app.use('/order', orderRoutes);

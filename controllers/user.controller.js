@@ -1,5 +1,7 @@
 import order from '../models/order.model.js';
 import user from '../models/user.model.js';
+import displayGandalf from '../utils/displayGandalf.js';
+import jwt from 'jsonwebtoken';
 
 export const userController = {
     listUsers: async (req, res) => {
@@ -17,13 +19,22 @@ export const userController = {
 
     viewUserProfile: async (req, res) => {
         const query = req.params.email;
-        const userProfile = await user.findOne({ "email": query });
-        const orders = await order.find({ "userId": userProfile._id });
 
-        console.log(orders);
-        const fullResult = { "profile": userProfile, "orders": orders };
-        res.json(fullResult);
+        const token = req.headers.token;
+        const payload = jwt.verify(token, process.env.SECRET);
 
+        const email = payload.email;
+
+        if (query !== email) {
+            displayGandalf(req, res);
+        } else {
+            const userProfile = await user.findOne({ "email": query });
+            const orders = await order.find({ "userId": userProfile._id });
+
+            console.log(orders);
+            const fullResult = { "profile": userProfile, "orders": orders };
+            res.json(fullResult);
+        }
     },
 
     // Create user with role USER

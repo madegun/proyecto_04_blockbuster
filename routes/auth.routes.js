@@ -5,5 +5,4 @@ const authRoutes = Router();
 
 authRoutes.post("/", authController.auth);
 
-
 export default authRoutes;

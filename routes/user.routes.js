@@ -8,9 +8,9 @@ const userRoutes = Router();
 
 userRoutes.get("/", checkAdmin, userController.listUsers);
 userRoutes.get("/:id", checkAdmin, userController.findUser);
-userRoutes.get("/viewUserProfile/:email", checkUser, userController.viewUserProfile);
-userRoutes.post("/", userController.createUser);
+userRoutes.get("/profile/:email", checkUser, userController.viewUserProfile);
 userRoutes.post("/createUserAdmin", checkAdmin, userController.createUserAdmin);
 userRoutes.delete("/:id", checkAdmin, userController.deleteUser);
+// userRoutes.post("/", userController.createUser);
 
 export default userRoutes;
