@@ -10,5 +10,6 @@ movieRoutes.get("/", movieController.listMovies);
 
 movieRoutes.get("/searchId/:id", movieController.findMovieById);
 movieRoutes.get("/searchTitle/:title", movieController.findMovieByTitle);
+movieRoutes.get("/searchPerformer/:performer", movieController.findByPerformer);
 
 export default movieRoutes;

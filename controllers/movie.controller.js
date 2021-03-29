@@ -12,7 +12,7 @@ export const movieController = {
         // localhost:3000/movie/search?id=605b64c0f0f9462918e5195a
         const queryId = req.params.id;
         // const queryId = req.query.id;
-        console.log(`endpoint /movie/search?id=${queryId}`);
+        // console.log(`endpoint /movie/search?id=${queryId}`);
 
         // res.send(queryId);
         const result = await movie.findById(query);
@@ -42,5 +42,12 @@ export const movieController = {
         const results = await movie.find({ title: { $regex: queryTitle, $options: "$i" } })
         // const results = await movie.find({ title: { $regex: queryTitle, $options: "$i" } })
         res.json(results);
+    },
+
+    findByPerformer: async (req, res) => {
+
+        const query = req.params.performer;
+        const results = await movie.find({ cast: { $regex: query, $options: "$i" } });
+        res.send(results);
     }
 }

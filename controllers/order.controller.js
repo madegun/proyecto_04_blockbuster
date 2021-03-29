@@ -1,18 +1,20 @@
 import order from '../models/order.model.js';
+import user from '../models/user.model.js';
 // import dotenv from 'dotenv';
 
 export const orderController = {
-    listOrders: async (req, res) => {
-        console.log(`endpoint: /user`);
 
+    // Lists all orders of all users.
+    listOrders: async (req, res) => {
         const resOrders = await order.find();
         res.json(resOrders);
     },
 
+    // This method creates an order recovering the movieId and user email from body and assigns startDate and endDate based on current date
     createOrder: async (req, res) => {
 
+        const userEmail = req.body.email;
         const movieId = req.body.movieId;
-        const userId = req.body.userId;
 
         const startDate = new Date();
         const days = parseInt(process.env.BASIC_ORDER);
@@ -23,8 +25,10 @@ export const orderController = {
             return endDate;
         };
 
+        const objectUser = await user.findOne({ "email": userEmail });
+
         const newOrder = {
-            userId: userId,
+            userId: objectUser._id,
             movieId: movieId,
             startDate: startDate,
             endDate: getEndDate(),
@@ -32,11 +36,13 @@ export const orderController = {
 
         await order.create(newOrder);
         res.json(`Order ${JSON.stringify(newOrder)} was created`);
+    },
+
+    // This method allows users to display their orders based on is email
+    listUserOrders: async (req, res) => {
+        const userEmail = req.body.email;
+        const objectUser = await user.findOne({ "email": userEmail });
+        const orders = await order.find({ "userId": objectUser._id });
+        res.json(orders);
     }
 }
-
-// Agregar pedido en mongodb
-// var myDate = new Date(2014, 11, 12, 14, 12);
-// db.collection.insert({ "date": myDate });
-
-// Crear pedido

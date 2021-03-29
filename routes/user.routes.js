@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user.controller.js';
+import checkAdmin from '../middlewares/checkAdmin.js';
+import checkUser from '../middlewares/checkUser.js';
+// import checkJWT from '../middlewares/jwt.js';
 
 const userRoutes = Router();
 
-userRoutes.get("/", userController.listUsers);
-userRoutes.get("/:id", userController.findUser);
+userRoutes.get("/", checkAdmin, userController.listUsers);
+userRoutes.get("/:id", checkAdmin, userController.findUser);
+userRoutes.get("/viewUserProfile/:email", checkUser, userController.viewUserProfile);
 userRoutes.post("/", userController.createUser);
-userRoutes.delete("/:id", userController.deleteUser);
+userRoutes.post("/createUserAdmin", checkAdmin, userController.createUserAdmin);
+userRoutes.delete("/:id", checkAdmin, userController.deleteUser);
 
 export default userRoutes;
