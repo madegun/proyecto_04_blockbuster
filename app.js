@@ -3,13 +3,14 @@ import express, { Router } from 'express';
 import userRoutes from './routes/user.routes.js';
 import movieRoutes from './routes/movies.routes.js';
 import orderRoutes from './routes/order.routes.js';
-import signinRoutes from './routes/signin.routes.js';
+import signupRoutes from './routes/signin.routes.js';
 import authRoutes from './routes/auth.routes.js';
 
 import connectDatabase from './config/connection_db.js';
 
 import dotenv from 'dotenv';
 import infoMiddleware from './middlewares/info.js';
+import checkUser from './middlewares/checkUser.js';
 
 // import checkJWT from './middlewares/jwt.js';
 
@@ -36,7 +37,7 @@ connectDatabase(urlDB, portDB, nameDB);
 app.use(infoMiddleware);
 
 // Single signin endpoint. No middlewares needed.
-app.use('/signin', signinRoutes);
+app.use('/signup', signupRoutes);
 
 // Once you have registered, you can get a JWT.
 app.use('/auth', authRoutes);

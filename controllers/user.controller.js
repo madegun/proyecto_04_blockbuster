@@ -30,8 +30,6 @@ export const userController = {
         } else {
             const userProfile = await user.findOne({ "email": query });
             const orders = await order.find({ "userId": userProfile._id });
-
-            console.log(orders);
             const fullResult = { "profile": userProfile, "orders": orders };
             res.json(fullResult);
         }

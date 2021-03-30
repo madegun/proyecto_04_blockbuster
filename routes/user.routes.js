@@ -6,11 +6,12 @@ import checkUser from '../middlewares/checkUser.js';
 
 const userRoutes = Router();
 
-userRoutes.get("/", checkAdmin, userController.listUsers);
-userRoutes.get("/:id", checkAdmin, userController.findUser);
-userRoutes.get("/profile/:email", checkUser, userController.viewUserProfile);
-userRoutes.post("/createUserAdmin", checkAdmin, userController.createUserAdmin);
-userRoutes.delete("/:id", checkAdmin, userController.deleteUser);
+userRoutes.post("/", [checkUser, checkAdmin], userController.listUsers);
+// userRoutes.get("/", checkAdmin, userController.listUsers);
+userRoutes.post("/:id", [checkUser, checkAdmin], userController.findUser);
+userRoutes.post("/profile/:email", checkUser, userController.viewUserProfile);
+userRoutes.post("/createUserAdmin", [checkUser, checkAdmin], userController.createUserAdmin);
+userRoutes.delete("/:id", [checkUser, checkAdmin], userController.deleteUser);
 // userRoutes.post("/", userController.createUser);
 
 export default userRoutes;

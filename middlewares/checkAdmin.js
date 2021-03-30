@@ -1,3 +1,4 @@
+import user from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
 import getInfoToken from '../utils/getInfoToken.js';
 
@@ -7,17 +8,14 @@ const checkAdmin = async (req, res, next) => {
 
         const adminRoleId = process.env.ADMIN_ROLE_ID;
 
-        // Retrieve the user
-        const user = await getInfoToken(req);
+        const user = req.userChecked;
 
-        // check if admin
-        if (user.email === null) {
-            displayGandalf(req, res);
-        } else if (String(user.roleId) !== adminRoleId) {
-            displayGandalf(req, res);
-        } else {
-            next();
-        }
+        if (user.roleId !== adminRoleId) {
+            res.send("You're not admin");
+            // displayGandalf(req, res);
+        } else if (user.roleId === adminRoleId) {
+            next()
+        };
 
     } catch (error) {
         displayGandalf(req, res);

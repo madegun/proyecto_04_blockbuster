@@ -28,5 +28,6 @@ export const authController = {
             console.log(error);
             res.send("Something was wrong");
         }
+
     }
 }

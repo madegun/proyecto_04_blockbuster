@@ -6,7 +6,7 @@ const checkUser = async (req, res, next) => {
     try {
 
         // Retrieve the user
-        const user = getInfoToken(req);
+        const user = await getInfoToken(req);
 
         // check if user
         if (user.email === null) {
@@ -14,6 +14,9 @@ const checkUser = async (req, res, next) => {
         } else if (String(user.email) !== req.body.email) {
             displayGandalf(req, res);
         } else {
+
+            // pass the req to the next middleware if needed
+            req.userChecked = user;
             next();
         }
 

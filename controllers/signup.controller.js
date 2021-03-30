@@ -1,6 +1,6 @@
 import user from '../models/user.model.js';
 
-export const signinController = {
+export const signupController = {
 
     // Create user with role USER
     createUser: async (req, res) => {
@@ -8,6 +8,9 @@ export const signinController = {
         const username = req.body.username;
         const email = req.body.email;
         const roleId = process.env.USER_ROLE_ID;
+
+        // const user = await user.findOne({ email: email });
+
 
         const newUser = {
             username: username,
@@ -17,5 +20,11 @@ export const signinController = {
 
         await user.create(newUser);
         res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
+        // Check if email has been already registered.
+        // if (user) {
+        //     res.send("User already exists")
+        // } else {
+
+        // }
     }
 }

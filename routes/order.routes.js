@@ -5,7 +5,7 @@ import checkUser from '../middlewares/checkUser.js';
 
 const orderRoutes = Router();
 
-orderRoutes.get("/", checkAdmin, orderController.listOrders);
+orderRoutes.get("/", [checkUser, checkAdmin], orderController.listOrders);
 orderRoutes.post("/", checkUser, orderController.createOrder);
 orderRoutes.post("/myorders", checkUser, orderController.listUserOrders);
 
