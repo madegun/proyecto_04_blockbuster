@@ -1,17 +1,14 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
+import getInfoToken from '../utils/getInfoToken.js'
 
-// Verificando token
+// Verifying if user is in db using the token 
 const checkUser = async (req, res, next) => {
     try {
-        const token = req.headers.token;
-        const payload = jwt.verify(token, process.env.SECRET);
 
-        const email = payload.email;
-        const user = await User.findOne({ "email": email });
+        // Retrieve the user
+        const user = getInfoToken(req);
 
-        // check if user exists
+        // check if user
         if (user.email === null) {
             displayGandalf(req, res);
         } else if (String(user.email) !== req.body.email) {

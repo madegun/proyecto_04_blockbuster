@@ -1,17 +1,14 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
+import getInfoToken from '../utils/getInfoToken.js';
 
-// Verificando token
+// Verifying if user has admin role using token
 const checkAdmin = async (req, res, next) => {
     try {
-        const token = req.headers.token;
-        const payload = jwt.verify(token, process.env.SECRET);
-
-        const email = payload.email;
-        const user = await User.findOne({ "email": email });
 
         const adminRoleId = process.env.ADMIN_ROLE_ID;
+
+        // Retrieve the user
+        const user = await getInfoToken(req);
 
         // check if admin
         if (user.email === null) {

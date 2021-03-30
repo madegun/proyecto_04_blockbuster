@@ -1,9 +1,9 @@
 import movie from '../models/movie.model.js';
 
 export const movieController = {
+    // List all movies in db
     listMovies: async (req, res) => {
         const resultsMovies = await movie.find();
-
         res.json(resultsMovies);
     },
 
@@ -15,12 +15,11 @@ export const movieController = {
         // console.log(`endpoint /movie/search?id=${queryId}`);
 
         // res.send(queryId);
-        const result = await movie.findById(query);
+        const result = await movie.findById(queryId);
         res.json(result);
     },
 
     findMovieByTitle: async (req, res) => {
-
 
         // INTENTO DE DEVOLVER RESULTADOS SEGUN CADA TÉRMINO
         // const queriesArray = req.params.title.split(" ");
