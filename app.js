@@ -36,7 +36,7 @@ connectDatabase(urlDB, portDB, nameDB);
 // Simple middleware showing us some basic information
 app.use(infoMiddleware);
 
-// Single signin endpoint. No middlewares needed.
+// Single signup endpoint. No middlewares needed.
 app.use('/signup', signupRoutes);
 
 // Once you have registered, you can get a JWT.

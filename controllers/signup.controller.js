@@ -9,22 +9,21 @@ export const signupController = {
         const email = req.body.email;
         const roleId = process.env.USER_ROLE_ID;
 
-        // const user = await user.findOne({ email: email });
+        // search if user exists in db
+        const userdb = await user.findOne({ email: email });
 
-
-        const newUser = {
-            username: username,
-            email: email,
-            roleId: roleId
-        }
-
-        await user.create(newUser);
-        res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
         // Check if email has been already registered.
-        // if (user) {
-        //     res.send("User already exists")
-        // } else {
+        if (userdb) {
+            res.send("User already exists")
+        } else {
+            const newUser = {
+                username: username,
+                email: email,
+                roleId: roleId
+            }
 
-        // }
+            await user.create(newUser);
+            res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
+        }
     }
 }
