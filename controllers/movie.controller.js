@@ -43,9 +43,9 @@ export const movieController = {
         res.json(results);
     },
 
-    findByPerformer: async (req, res) => {
+    findByCast: async (req, res) => {
 
-        const query = req.params.performer;
+        const query = req.params.cast;
         const results = await movie.find({ cast: { $regex: query, $options: "$i" } });
         res.send(results);
     }
