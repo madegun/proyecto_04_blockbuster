@@ -81,6 +81,19 @@ You can perform search actions based on cast.
 http://localhost:3000/movie/searchPerformer/ford
 ```
 
+### Create user with admin role
+
+`http://localhost:3000/user/createUserAdmin`
+
+```
+{
+    "username":"admin",
+    "email":"admin@blockbuster.com",
+    "newUserName": "newAdmin",
+    "newUserEmail": "newAdmin@blockbuster"
+}
+```
+
 ### Tools
 
 - [nodejs](https://nodejs.org/en/) - JavaScript runtime

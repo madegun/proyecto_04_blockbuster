@@ -1,11 +1,11 @@
 import order from '../models/order.model.js';
 import user from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 
 export const userController = {
     listUsers: async (req, res) => {
-
+        console.log("en el list users");
         const resUsers = await user.find();
         res.json(resUsers);
     },
@@ -20,24 +20,19 @@ export const userController = {
     viewUserProfile: async (req, res) => {
         // const query = req.params.email;
         // const user = await getInfoToken(req);
-        // const query = req.body.email;
-        const user = req.userChecked;
-        console.log(user);
-        // const query = req.checkedUser;
-        // console.log(query);
+        const queryBody = req.body.email;
+
+        // We can use de req object that we modified in checkUser
+        const queryToken = req.userChecked;
 
         // const token = req.headers.token;
         // const payload = jwt.verify(token, process.env.SECRET);
-
         // const email = payload.email;
-        // console.log(query);
-        // console.log(email);
 
-        if (query !== email) {
-            res.send("algo fue mal");
-            // displayGandalf(req, res);
+        if (queryToken.email !== queryBody) {
+            displayGandalf(req, res);
         } else {
-            const userProfile = await user.findOne({ "email": query });
+            const userProfile = await user.findOne({ "email": queryBody });
             const orders = await order.find({ "userId": userProfile._id });
             const fullResult = { "profile": userProfile, "orders": orders };
             res.json(fullResult);
@@ -63,8 +58,8 @@ export const userController = {
 
     // Create user with role ADMIN.
     createUserAdmin: async (req, res) => {
-        const username = req.body.username;
-        const email = req.body.email;
+        const username = req.body.newUserName;
+        const email = req.body.newUserEmail;
         const roleId = process.env.ADMIN_ROLE_ID;
 
         const newUser = {

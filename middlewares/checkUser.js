@@ -4,10 +4,8 @@ import getInfoToken from '../utils/getInfoToken.js'
 // Verifying if user is in db using the token 
 const checkUser = async (req, res, next) => {
     try {
-
         // Retrieve the user
         const user = await getInfoToken(req);
-        console.log(user);
 
         // check if user
         if (user.email === null) {
