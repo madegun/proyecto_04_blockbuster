@@ -5,8 +5,8 @@ import checkUser from '../middlewares/checkUser.js';
 
 const orderRoutes = Router();
 
-orderRoutes.get("/", [checkUser, checkAdmin], orderController.listOrders);
-orderRoutes.post("/", checkUser, orderController.createOrder);
-orderRoutes.post("/myorders", checkUser, orderController.listUserOrders);
+orderRoutes.post("/myOrders", checkUser, orderController.listUserOrders);
+orderRoutes.post("/createOrder", checkUser, orderController.createOrder);
+orderRoutes.get("/listOrders", [checkUser, checkAdmin], orderController.listOrders);
 
 export default orderRoutes;

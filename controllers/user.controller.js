@@ -1,7 +1,6 @@
 import order from '../models/order.model.js';
 import user from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
-// import jwt from 'jsonwebtoken';
 
 export const userController = {
     listUsers: async (req, res) => {
@@ -11,23 +10,16 @@ export const userController = {
     },
 
     findUser: async (req, res) => {
-
         const query = req.params.id;
         const resUser = await user.findById(query);
         res.json(resUser)
     },
 
     viewUserProfile: async (req, res) => {
-        // const query = req.params.email;
-        // const user = await getInfoToken(req);
         const queryBody = req.body.email;
 
         // We can use de req object that we modified in checkUser
         const queryToken = req.userChecked;
-
-        // const token = req.headers.token;
-        // const payload = jwt.verify(token, process.env.SECRET);
-        // const email = payload.email;
 
         if (queryToken.email !== queryBody) {
             displayGandalf(req, res);
@@ -39,22 +31,22 @@ export const userController = {
         }
     },
 
-    // Create user with role USER
-    // createUser: async (req, res) => {
+    // Create user with role USER.
+    createUser: async (req, res) => {
 
-    //     const username = req.body.username;
-    //     const email = req.body.email;
-    //     const roleId = process.env.USER_ROLE_ID;
+        const username = req.body.newUserName;
+        const email = req.body.newUserEmail;
+        const roleId = process.env.USER_ROLE_ID;
 
-    //     const newUser = {
-    //         username: username,
-    //         email: email,
-    //         roleId: roleId
-    //     }
+        const newUser = {
+            username: username,
+            email: email,
+            roleId: roleId
+        }
 
-    //     await user.create(newUser);
-    //     res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
-    // },
+        await user.create(newUser);
+        res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
+    },
 
     // Create user with role ADMIN.
     createUserAdmin: async (req, res) => {
@@ -72,6 +64,7 @@ export const userController = {
         res.send(`User ${JSON.stringify(newUser)} was added. Role: ADMIN`);
     },
 
+    // Delete user by Id
     deleteUser: async (req, res) => {
 
         await user.findByIdAndDelete(req.params.id);

@@ -1,6 +1,5 @@
 import order from '../models/order.model.js';
 import user from '../models/user.model.js';
-// import dotenv from 'dotenv';
 
 export const orderController = {
 
