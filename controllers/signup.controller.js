@@ -9,7 +9,7 @@ export const signupController = {
         const email = req.body.email;
         const roleId = process.env.USER_ROLE_ID;
 
-        // search if user exists in db
+        // search if user exists in db, base on email.
         const userdb = await user.findOne({ email: email });
 
         // Check if email has been already registered.

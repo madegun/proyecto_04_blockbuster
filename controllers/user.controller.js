@@ -18,15 +18,24 @@ export const userController = {
     },
 
     viewUserProfile: async (req, res) => {
-        const query = req.params.email;
+        // const query = req.params.email;
+        // const user = await getInfoToken(req);
+        // const query = req.body.email;
+        const user = req.userChecked;
+        console.log(user);
+        // const query = req.checkedUser;
+        // console.log(query);
 
-        const token = req.headers.token;
-        const payload = jwt.verify(token, process.env.SECRET);
+        // const token = req.headers.token;
+        // const payload = jwt.verify(token, process.env.SECRET);
 
-        const email = payload.email;
+        // const email = payload.email;
+        // console.log(query);
+        // console.log(email);
 
         if (query !== email) {
-            displayGandalf(req, res);
+            res.send("algo fue mal");
+            // displayGandalf(req, res);
         } else {
             const userProfile = await user.findOne({ "email": query });
             const orders = await order.find({ "userId": userProfile._id });
@@ -36,21 +45,21 @@ export const userController = {
     },
 
     // Create user with role USER
-    createUser: async (req, res) => {
+    // createUser: async (req, res) => {
 
-        const username = req.body.username;
-        const email = req.body.email;
-        const roleId = process.env.USER_ROLE_ID;
+    //     const username = req.body.username;
+    //     const email = req.body.email;
+    //     const roleId = process.env.USER_ROLE_ID;
 
-        const newUser = {
-            username: username,
-            email: email,
-            roleId: roleId
-        }
+    //     const newUser = {
+    //         username: username,
+    //         email: email,
+    //         roleId: roleId
+    //     }
 
-        await user.create(newUser);
-        res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
-    },
+    //     await user.create(newUser);
+    //     res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
+    // },
 
     // Create user with role ADMIN.
     createUserAdmin: async (req, res) => {

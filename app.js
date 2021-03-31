@@ -10,7 +10,7 @@ import connectDatabase from './config/connection_db.js';
 
 import dotenv from 'dotenv';
 import infoMiddleware from './middlewares/info.js';
-import checkUser from './middlewares/checkUser.js';
+// import checkUser from './middlewares/checkUser.js';
 
 // import checkJWT from './middlewares/jwt.js';
 
