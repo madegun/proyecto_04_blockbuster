@@ -15,16 +15,12 @@ export const authController = {
         try {
             const queryUser = await user.findOne({ email: email });
 
-            console.log(queryUser.password);
-            console.log(password);
-
             if (!queryUser) {
                 return res.send({ message: "User is not registered (email)" });
             }
-            // Checking password
-            if (!Bcryp.compareSync(password, queryUser.password)) {
-                return res.send({ message: "Incorrect password" });
-            };
+            // if (!Bcryp.compareSync(password, queryUser.password)) {
+            //     return res.send({ message: "Incorrect password" });
+            // };
 
             const payload = {
                 username: username,

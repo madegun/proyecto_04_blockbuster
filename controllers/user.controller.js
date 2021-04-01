@@ -64,6 +64,7 @@ export const userController = {
         const username = req.body.newUserName;
         const email = req.body.newUserEmail;
         const roleId = process.env.ADMIN_ROLE_ID;
+        const password = Bcryp.hashSync(req.body.newUserPassword, 4);
 
         // Search if user already exists in db.
         const userdb = await user.findOne({ email: email });
@@ -75,7 +76,8 @@ export const userController = {
             const newUser = {
                 username: username,
                 email: email,
-                roleId: roleId
+                roleId: roleId,
+                password: password
             }
 
             await user.create(newUser);
