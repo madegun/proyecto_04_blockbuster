@@ -11,7 +11,8 @@ const checkAdmin = async (req, res, next) => {
 
         // Why can't i use !== and === although i convert object to string in id?
         if (user.roleId != adminRoleId) {
-            res.send("You're not admin");
+            // res.send("You're not admin");
+            displayGandalf(req, res);
         } else if (user.roleId == adminRoleId) {
             next();
         };

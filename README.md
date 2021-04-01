@@ -4,7 +4,12 @@
 
 90's videoclub API rest using nodejs, express, mongoose and mongodb. It has been built using MVC pattern. Basic CRUD operations are implemented.
 
-### Authentication :key:
+### Main Endpoints
+
+<details>
+  <summary>Authentication</summary>
+  
+  ### Authentication :key:
 
 Some Blockbuster's endpoints can be used without registration or token.
 
@@ -34,7 +39,91 @@ After registration, user will be able to obtain an individual token by accessing
 
 This token should be include in header request.
 
-### Movies
+</details>
+
+<details>
+  <summary>Users</summary>
+  
+### Users :information_desk_person:
+
+Everything regarding users is sited on `/user` endpoint.
+
+#### POST /user/profile
+
+Each user can show its profile information. Orders info is also include in this part.
+
+```json
+{
+  "movieId": "605f5f08fecef891c1d656e5",
+  "email": "documentation@blockbuster.com"
+}
+```
+
+This POST will return something like:
+
+```json
+{
+  "profile": {
+    "_id": "606454921f916c4df21d3c44",
+    "username": "documentation",
+    "email": "documentation@blockbuster.com",
+    "roleId": "605e3c2f27c76e28fd4ae7e8",
+    "__v": 0
+  },
+  "orders": [
+    {
+      "_id": "606454fe1f916c4df21d3c45",
+      "userId": "606454921f916c4df21d3c44",
+      "movieId": "605f5f08fecef891c1d656e5",
+      "startDate": "Wed Mar 31 2021 12:54:54 GMT+0200 (hora de verano de Europa central)",
+      "endDate": "Sat Apr 03 2021 12:54:54 GMT+0200 (hora de verano de Europa central)",
+      "__v": 0
+    }
+  ]
+}
+```
+
+Each user can only display its own profile information.
+
+#### POST /user/createUserAdmin
+
+Only a admin user can create new admin users.
+
+`http://localhost:3000/user/createUserAdmin`
+
+Current admin user should include its user and email and the new user name and email as follows:
+
+```json
+{
+  "username": "admin",
+  "email": "admin@blockbuster.com",
+  "newUserName": "newAdmin",
+  "newUserEmail": "newAdmin@blockbuster"
+}
+```
+
+#### POST /user/createUser
+
+This endpoint does the same that createUserAdmin, but it will create a new user with regular user role.
+
+#### POST /user
+
+This endpoint return a list both regular and admin users currently in the database.
+
+#### POST /user/[id]
+
+This endpoints retrieve information about a specific user based on their id.
+
+#### DELETE /user/[id]
+
+This endpoint delete from db a specific user based on its id.
+
+</details>
+
+<details>
+  <summary>Movies</summary>
+  
+  ### Movies :vhs:
 
 `/movie` endpoint can be used without registration and token.
 
@@ -78,81 +167,45 @@ http://localhost:3000/movie/searchPerformer/ford
 
 This search will return matches with "ford" in field cast.
 
-### Users
+</details>
 
-Everything regarding users is sited on `/user` endpoint.
+<details>
+  <summary>Orders</summary>
 
-#### POST /user/profile
+### Orders :page_facing_up:
 
-Each user can show its profile information. Orders info is also include in this part.
-
-```json
-{
-  "movieId": "605f5f08fecef891c1d656e5",
-  "email": "documentation@blockbuster.com"
-}
-```
-
-This POST will return something like:
-
-```json
-{
-  "profile": {
-    "_id": "606454921f916c4df21d3c44",
-    "username": "documentation",
-    "email": "documentation@blockbuster.com",
-    "roleId": "605e3c2f27c76e28fd4ae7e8",
-    "__v": 0
-  },
-  "orders": [
-    {
-      "_id": "606454fe1f916c4df21d3c45",
-      "userId": "606454921f916c4df21d3c44",
-      "movieId": "605f5f08fecef891c1d656e5",
-      "startDate": "Wed Mar 31 2021 12:54:54 GMT+0200 (hora de verano de Europa central)",
-      "endDate": "Sat Apr 03 2021 12:54:54 GMT+0200 (hora de verano de Europa central)",
-      "__v": 0
-    }
-  ]
-}
-```
-
-Each user can only display its own profile information.
-
-#### POST /user/createUserAdmin
-
-`http://localhost:3000/user/createUserAdmin`
-
-```
-{
-    "username":"admin",
-    "email":"admin@blockbuster.com",
-    "newUserName": "newAdmin",
-    "newUserEmail": "newAdmin@blockbuster"
-}
-```
-
-#### POST /user/createUserAdmin
-
-#### POST /user/createUser
-
-#### POST /user
-
-#### POST /user/[id]
-
-#### DELETE /user/[id]
-
-### Orders
+This endpoints groups everything related with orders.
 
 #### POST /order/myOrders
 
+This endpoint allows user to display its orders.
+
 #### POST /order/createOrder
+
+To create an order, user must specify its email and the movieId of the movie he or she wants to rent:
+
+```json
+{
+  "email": "documentation@blockbuster.com",
+  "movieId": "605b654bf0f9462918e5196f"
+}
+```
+
+If the order is created correctly, it will show order info:
+
+```
+"Order {\"userId\":\"606454921f916c4df21d3c44\",\"movieId\":\"605b654bf0f9462918e5196f\",\"startDate\":\"2021-04-01T10:26:46.603Z\",\"endDate\":\"2021-04-04T10:26:46.603Z\"} was created"
+```
 
 #### GET /order/listOrders
 
+Admin users can see all list currently in the database thanks to this endpoint.
+
+</details>
+
 ### Tools
 
-- [nodejs](https://nodejs.org/en/) - JavaScript runtime
+- [nodejs](https://nodejs.org/en/) - JavaScript runtime enviroment
 - [express](http://expressjs.com/) - nodejs backend framework
 - [mongodb](https://www.mongodb.com/) - database
 - [mongoose](https://mongoosejs.com/) - object modelling tool
@@ -167,7 +220,3 @@ Each user can only display its own profile information.
 ### Author
 
 Rubén Fernández Santos
-
-```
-
-```

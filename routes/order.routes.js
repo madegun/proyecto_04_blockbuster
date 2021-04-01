@@ -7,6 +7,6 @@ const orderRoutes = Router();
 
 orderRoutes.post("/myOrders", checkUser, orderController.listUserOrders);
 orderRoutes.post("/createOrder", checkUser, orderController.createOrder);
-orderRoutes.get("/listOrders", [checkUser, checkAdmin], orderController.listOrders);
+orderRoutes.post("/listOrders", [checkUser, checkAdmin], orderController.listOrders);
 
 export default orderRoutes;

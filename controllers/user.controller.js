@@ -4,7 +4,6 @@ import displayGandalf from '../utils/displayGandalf.js';
 
 export const userController = {
     listUsers: async (req, res) => {
-        console.log("en el list users");
         const resUsers = await user.find();
         res.json(resUsers);
     },
