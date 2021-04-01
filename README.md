@@ -21,7 +21,8 @@ To register, user should include in body request an `email` and a `username` as 
 ```json
 {
   "username": "documentation",
-  "email": "documentation@blockbuster.com"
+  "email": "documentation@blockbuster.com",
+  "password": "********"
 }
 ```
 
@@ -55,7 +56,8 @@ Each user can show its profile information. Orders info is also include in this 
 ```json
 {
   "movieId": "605f5f08fecef891c1d656e5",
-  "email": "documentation@blockbuster.com"
+  "email": "documentation@blockbuster.com",
+  "password": "********"
 }
 ```
 
@@ -97,8 +99,10 @@ Current admin user should include its user and email and the new user name and e
 {
   "username": "admin",
   "email": "admin@blockbuster.com",
+  "password": "********",
   "newUserName": "newAdmin",
-  "newUserEmail": "newAdmin@blockbuster"
+  "newUserEmail": "newAdmin@blockbuster",
+  "newUserPassword": "********"
 }
 ```
 
@@ -178,7 +182,7 @@ This endpoints groups everything related with orders.
 
 #### POST /order/myOrders
 
-This endpoint allows user to display its orders.
+This endpoint allows user to display its orders. User needs enter email and password.
 
 #### POST /order/createOrder
 
@@ -187,7 +191,8 @@ To create an order, user must specify its email and the movieId of the movie he 
 ```json
 {
   "email": "documentation@blockbuster.com",
-  "movieId": "605b654bf0f9462918e5196f"
+  "movieId": "605b654bf0f9462918e5196f",
+  "password": "********"
 }
 ```
 
