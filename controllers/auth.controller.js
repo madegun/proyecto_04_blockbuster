@@ -10,7 +10,7 @@ export const authController = {
         const email = req.body.email;
         const password = req.body.password;
 
-        // Generating JWT IF user is ALREADY registered.
+        // Generating JWT IF user is ALREADY registered (and the password is valid)
         // Note that we can't use checkUser middleware in this part because we have not yet generated the token.
         try {
             const queryUser = await user.findOne({ email: email });
@@ -18,9 +18,9 @@ export const authController = {
             if (!queryUser) {
                 return res.send({ message: "User is not registered (email)" });
             }
-            // if (!Bcryp.compareSync(password, queryUser.password)) {
-            //     return res.send({ message: "Incorrect password" });
-            // };
+            if (!Bcryp.compareSync(password, queryUser.password)) {
+                return res.send({ message: "Incorrect password" });
+            };
 
             const payload = {
                 username: username,

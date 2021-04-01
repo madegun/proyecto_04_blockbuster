@@ -1,17 +1,14 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user.controller.js';
 import checkAdmin from '../middlewares/checkAdmin.js';
-import checkPassword from '../middlewares/checkPassword.js';
-import checkUser from '../middlewares/checkUser.js';
-// import checkJWT from '../middlewares/jwt.js';
 
 const userRoutes = Router();
 
-userRoutes.post("/profile", checkUser, userController.viewUserProfile);
-userRoutes.post("/createUserAdmin", [checkUser, checkAdmin], userController.createUserAdmin);
-userRoutes.post("/createUser", [checkUser, checkAdmin], userController.createUser);
-userRoutes.post("/", [checkUser, checkPassword, checkAdmin], userController.listUsers);
-userRoutes.post("/:id", [checkUser, checkAdmin], userController.findUser);
-userRoutes.delete("/:id", [checkUser, checkAdmin], userController.deleteUser);
+userRoutes.post("/profile", userController.viewUserProfile);
+userRoutes.post("/createUserAdmin", checkAdmin, userController.createUserAdmin);
+userRoutes.post("/createUser", checkAdmin, userController.createUser);
+userRoutes.post("/", checkAdmin, userController.listUsers);
+userRoutes.post("/:id", checkAdmin, userController.findUser);
+userRoutes.delete("/:id", checkAdmin, userController.deleteUser);
 
 export default userRoutes;

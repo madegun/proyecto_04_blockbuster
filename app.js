@@ -11,6 +11,8 @@ import authRoutes from './routes/auth.routes.js';
 import infoMiddleware from './middlewares/info.js';
 
 import dotenv from 'dotenv';
+import checkUser from './middlewares/checkUser.js';
+import checkPassword from './middlewares/checkPassword.js';
 
 // Init express
 const app = express();
@@ -43,10 +45,11 @@ app.use('/auth', authRoutes);
 // app.use('/user', checkJWT, userRoutes);
 
 // Master routes. 
-app.use('/user', userRoutes);
+app.use('/user', [checkUser, checkPassword], userRoutes);
 app.use('/movie', movieRoutes);
-app.use('/order', orderRoutes);
+app.use('/order', [checkUser, checkPassword], orderRoutes);
 
+// Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
