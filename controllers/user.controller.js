@@ -1,6 +1,8 @@
 import order from '../models/order.model.js';
 import user from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
+import Bcryp from 'bcrypt';
+import { request } from 'express';
 
 // This controller groups all methods related to users.
 export const userController = {
@@ -37,6 +39,7 @@ export const userController = {
         const username = req.body.newUserName;
         const email = req.body.newUserEmail;
         const roleId = process.env.USER_ROLE_ID;
+        const password = Bcryp.hashSync(request.body.password, 4);
 
         // Search if user already exists in db.
         const userdb = await user.findOne({ email: email });
@@ -48,7 +51,8 @@ export const userController = {
             const newUser = {
                 username: username,
                 email: email,
-                roleId: roleId
+                roleId: roleId,
+                password: password
             }
             await user.create(newUser);
             res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
