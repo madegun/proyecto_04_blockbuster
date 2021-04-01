@@ -1,6 +1,7 @@
 import order from '../models/order.model.js';
 import user from '../models/user.model.js';
 
+// This controller groups all methods related to orders
 export const orderController = {
 
     // Lists all orders of all users.
@@ -9,7 +10,7 @@ export const orderController = {
         res.json(resOrders);
     },
 
-    // This method creates an order recovering the movieId and user email from body and assigns startDate and endDate based on current date
+    // This method creates an order recovering the movieId and user email from body and assigns startDate and endDate based on current date.
     createOrder: async (req, res) => {
 
         const userEmail = req.body.email;
@@ -18,6 +19,7 @@ export const orderController = {
         const startDate = new Date();
         const days = parseInt(process.env.BASIC_ORDER);
 
+        // This part generate de return date using the current date.
         const getEndDate = () => {
             let endDate = new Date(startDate);
             endDate.setDate(endDate.getDate() + days);
@@ -37,7 +39,7 @@ export const orderController = {
         res.json(`Order ${JSON.stringify(newOrder)} was created`);
     },
 
-    // This method allows users to display their orders based on is email
+    // This method allows users to display their orders based on is email.
     listUserOrders: async (req, res) => {
         const userEmail = req.body.email;
         const objectUser = await user.findOne({ "email": userEmail });

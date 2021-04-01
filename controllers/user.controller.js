@@ -2,6 +2,7 @@ import order from '../models/order.model.js';
 import user from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
 
+// This controller groups all methods related to users.
 export const userController = {
     listUsers: async (req, res) => {
         const resUsers = await user.find();
@@ -37,14 +38,21 @@ export const userController = {
         const email = req.body.newUserEmail;
         const roleId = process.env.USER_ROLE_ID;
 
-        const newUser = {
-            username: username,
-            email: email,
-            roleId: roleId
-        }
+        // Search if user already exists in db.
+        const userdb = await user.findOne({ email: email });
 
-        await user.create(newUser);
-        res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
+        // If user does not exist, create it.
+        if (userdb) {
+            res.send("User already exits");
+        } else {
+            const newUser = {
+                username: username,
+                email: email,
+                roleId: roleId
+            }
+            await user.create(newUser);
+            res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
+        }
     },
 
     // Create user with role ADMIN.
@@ -53,14 +61,22 @@ export const userController = {
         const email = req.body.newUserEmail;
         const roleId = process.env.ADMIN_ROLE_ID;
 
-        const newUser = {
-            username: username,
-            email: email,
-            roleId: roleId
-        }
+        // Search if user already exists in db.
+        const userdb = await user.findOne({ email: email });
 
-        await user.create(newUser);
-        res.send(`User ${JSON.stringify(newUser)} was added. Role: ADMIN`);
+        // If user does not exist, create it.
+        if (userdb) {
+            res.send("User already exits");
+        } else {
+            const newUser = {
+                username: username,
+                email: email,
+                roleId: roleId
+            }
+
+            await user.create(newUser);
+            res.send(`User ${JSON.stringify(newUser)} was added. Role: ADMIN`);
+        }
     },
 
     // Delete user by Id

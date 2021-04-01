@@ -1,5 +1,6 @@
 import user from '../models/user.model.js';
 
+// This controller only has one method. It creates a user with user role, from body data.
 export const signupController = {
 
     // Create user with role USER
@@ -9,7 +10,7 @@ export const signupController = {
         const email = req.body.email;
         const roleId = process.env.USER_ROLE_ID;
 
-        // search if user exists in db, base on email.
+        // Search if user exists in db, base on email.
         const userdb = await user.findOne({ email: email });
 
         // Check if email has been already registered.

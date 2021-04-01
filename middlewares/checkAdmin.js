@@ -1,11 +1,9 @@
-import user from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
-// import getInfoToken from '../utils/getInfoToken.js';
 
 // Verifying if user has admin role using token
 const checkAdmin = async (req, res, next) => {
     try {
-        console.log("In checkadmin");
+        console.log("Verifying admin privileges...");
         const adminRoleId = process.env.ADMIN_ROLE_ID;
         const user = req.userChecked;
 
@@ -19,7 +17,6 @@ const checkAdmin = async (req, res, next) => {
 
     } catch (error) {
         displayGandalf(req, res);
-        // res.sendStatus(401);
     }
 }
 

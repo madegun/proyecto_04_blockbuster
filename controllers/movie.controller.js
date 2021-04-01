@@ -1,20 +1,17 @@
 import movie from '../models/movie.model.js';
 
+// This controller groups all methods related with movies.
 export const movieController = {
     // List all movies in db
     listMovies: async (req, res) => {
+
         const resultsMovies = await movie.find();
         res.json(resultsMovies);
     },
 
     findMovieById: async (req, res) => {
 
-        // localhost:3000/movie/search?id=605b64c0f0f9462918e5195a
         const queryId = req.params.id;
-        // const queryId = req.query.id;
-        // console.log(`endpoint /movie/search?id=${queryId}`);
-
-        // res.send(queryId);
         const result = await movie.findById(queryId);
         res.json(result);
     },
@@ -35,11 +32,9 @@ export const movieController = {
 
         // ESTE CÓDIGO FUNCIONA
         const queryTitle = req.params.title;
-        // const queryTitle = req.query.title;
 
         // regex to search based on title
         const results = await movie.find({ title: { $regex: queryTitle, $options: "$i" } })
-        // const results = await movie.find({ title: { $regex: queryTitle, $options: "$i" } })
         res.json(results);
     },
 

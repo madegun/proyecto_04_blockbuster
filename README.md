@@ -2,7 +2,7 @@
 
 ### Introduction
 
-90's videoclub API rest using nodejs, express, mongoose and mongodb. It has been built using MVC pattern. Basic CRUD operations are implemented.
+90's videoclub API rest using **nodejs**, **express**, **mongoose** and **mongodb**. It has been built using **MVC** pattern. Basic **CRUD** operations are implemented.
 
 ### Main Endpoints
 
