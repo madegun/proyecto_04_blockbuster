@@ -3,7 +3,6 @@ import displayGandalf from '../utils/displayGandalf.js';
 // Verifying if user has admin role using token
 const checkAdmin = async (req, res, next) => {
     try {
-        console.log(req.userChecked);
         console.log("Verifying admin privileges...");
         const adminRoleId = process.env.ADMIN_ROLE_ID;
         const user = req.userChecked;
