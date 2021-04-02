@@ -1,0 +1,23 @@
+[{
+  "_id": {
+    "$oid": "6065e3fb9162be212f33db39"
+  },
+  "username": "admin",
+  "email": "admin@blockbuster.com",
+  "roleId": {
+    "$oid": "605e3c1727c76e28fd4ae7d0"
+  },
+  "password": "$2b$04$QRzRlQr4rO8xbw/Ag5aP2.ySR1YVZKcYNgVShNiyF7ADePU0FJbtC",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6066e755fd82191dedadb634"
+  },
+  "username": "testing",
+  "email": "testing@blockbuster.com",
+  "roleId": {
+    "$oid": "605e3c2f27c76e28fd4ae7e8"
+  },
+  "password": "$2b$04$fO78HoZfM/UstjrGMrljc.i91QLIEefo3BBln1NXCNoYZwj8b1uMu",
+  "__v": 0
+}]

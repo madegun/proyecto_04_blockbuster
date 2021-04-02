@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "6066da18ea0a70165a6159fd"
+  },
+  "userId": {
+    "$oid": "6066d92823f25515024806f7"
+  },
+  "movieId": {
+    "$oid": "605b64a9f0f9462918e51957"
+  },
+  "startDate": "Fri Apr 02 2021 10:47:20 GMT+0200 (hora de verano de Europa central)",
+  "endDate": "Mon Apr 05 2021 10:47:20 GMT+0200 (hora de verano de Europa central)",
+  "__v": 0
+}]
