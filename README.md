@@ -164,6 +164,14 @@ You can perform search actions based on title.
 http://localhost:3000/movie/searchTitle/matrix
 ```
 
+It is possible to perform a search with more than one term:
+
+```
+http://localhost:3000/movie/searchTitle/matrix blade
+```
+
+However, search term will be considered individually. For instance, the results of search /matrix reloaded will not contain only _Matrix Reloaded_, but also _Matrix_ and _Matrix Revolutions_.
+
 #### GET /movie/searchCast/[query]
 
 You can perform search actions based on cast.
@@ -173,6 +181,18 @@ http://localhost:3000/movie/searchPerformer/ford
 ```
 
 This search will return matches with "ford" in field cast.
+
+It is possible to perform a search with more than one term (see searchTitle).
+
+#### GET /movie/searchGenre/[query]
+
+You can perform search actions based on cast.
+
+```
+http://localhost:3000/movie/searchPerformer/drama
+```
+
+It is possible to perform a search with more than one term (see searchTitle).
 
 </details>
 

@@ -1,4 +1,5 @@
 import movie from '../models/movie.model.js';
+import array2D from '../utils/array2D.js';
 
 // This controller groups all methods related with movies.
 export const movieController = {
@@ -16,38 +17,46 @@ export const movieController = {
         res.json(result);
     },
 
+    // This method more than one search terms in the url.
     findMovieByTitle: async (req, res) => {
 
-        // INTENTO DE DEVOLVER RESULTADOS SEGUN CADA TÉRMINO
-        // const queriesArray = req.params.title.split(" ");
-        // console.log(queriesArray);
-        // let results = [];
+        // search for each term.
+        const searchTerms = req.params.title.split(" ");
+        const matches = [];
 
-        // queriesArray.forEach(async (word) => {
-        //     let r = await movie.find({ title: { $regex: word, $options: "$i" } });
-        //     results.push(r);
-        //     console.log(results);
-        // });
-        // console.log("First result " + results);
+        // Eventually, matches array will be 2D array
+        for (const term of searchTerms) {
+            const match = await movie.find({ title: { $regex: term, $options: "$i" } });
 
-        // ESTE CÓDIGO FUNCIONA
-        const queryTitle = req.params.title;
+            matches.push(match);
+        }
 
-        // regex to search based on title
-        const results = await movie.find({ title: { $regex: queryTitle, $options: "$i" } })
-        res.json(results);
+        const filteredMovies = array2D(matches);
+
+        res.json(filteredMovies);
     },
 
+    // This method more than one search terms in the url.
     findByCast: async (req, res) => {
 
-        const query = req.params.cast;
-        const results = await movie.find({ cast: { $regex: query, $options: "$i" } });
-        res.send(results);
+        const searchTerms = req.params.cast.split(" ");
+        const matches = [];
+
+        // Eventually, matches array will be 2D array
+        for (const term of searchTerms) {
+            const match = await movie.find({ cast: { $regex: term, $options: "$i" } });
+
+            matches.push(match);
+        }
+
+        const filteredMovies = array2D(matches);
+
+        res.json(filteredMovies);
     },
 
+    // This method more than one search terms in the url.
     findByGenre: async (req, res) => {
         const searchTerms = req.params.genre.split(" ");
-
         const matches = [];
 
         // Eventually, matches array will be 2D array
@@ -58,18 +67,7 @@ export const movieController = {
             matches.push(match);
         }
 
-        // 
-        const rawMovies = [];
-
-        // Iterate through matches 2D array in order to convert the 2D array in a single array with all movies.
-        matches.forEach(results => {
-            results.forEach(movie => {
-                rawMovies.push(movie.title);
-            });
-        });
-
-        // Eliminate duplicates
-        const filteredMovies = [...new Set(rawMovies)];
+        const filteredMovies = array2D(matches);
 
         res.json(filteredMovies);
     }
