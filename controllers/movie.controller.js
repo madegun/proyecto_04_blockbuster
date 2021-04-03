@@ -43,5 +43,34 @@ export const movieController = {
         const query = req.params.cast;
         const results = await movie.find({ cast: { $regex: query, $options: "$i" } });
         res.send(results);
+    },
+
+    findByGenre: async (req, res) => {
+        const searchTerms = req.params.genre.split(" ");
+
+        const matches = [];
+
+        // Eventually, matches array will be 2D array
+        for (const term of searchTerms) {
+            const match = await movie.find({ genre: { $regex: term, $options: "$i" } });
+            // const match = await movie.findOne({ genre: { $regex: term, $options: "$i" } }).lean();
+
+            matches.push(match);
+        }
+
+        // 
+        const rawMovies = [];
+
+        // Iterate through matches 2D array in order to convert the 2D array in a single array with all movies.
+        matches.forEach(results => {
+            results.forEach(movie => {
+                rawMovies.push(movie.title);
+            });
+        });
+
+        // Eliminate duplicates
+        const filteredMovies = [...new Set(rawMovies)];
+
+        res.json(filteredMovies);
     }
 }
