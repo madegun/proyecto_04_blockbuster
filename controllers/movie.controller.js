@@ -22,18 +22,23 @@ export const movieController = {
 
         // search for each term.
         const searchTerms = req.params.title.split(" ");
-        const matches = [];
 
-        // Eventually, matches array will be 2D array
-        for (const term of searchTerms) {
-            const match = await movie.find({ title: { $regex: term, $options: "$i" } });
+        // Consulta que funciona en compass. Hay que hacerlo dinamico y con regex
+        const results = await movie.find({ title: { $in: ["Matrix", "Blade Runner"] } });
 
-            matches.push(match);
-        }
+        // const matches = [];
 
-        const filteredMovies = array2D(matches);
+        // // Eventually, matches array will be 2D array
+        // for (const term of searchTerms) {
+        //     const match = await movie.find({ title: { $regex: term, $options: "$i" } });
 
-        res.json(filteredMovies);
+        //     matches.push(match);
+        // }
+
+        // const filteredMovies = array2D(matches);
+
+        // res.json(filteredMovies);
+        res.json(results);
     },
 
     // This method more than one search terms in the url.

@@ -45,9 +45,9 @@ app.use('/auth', authRoutes);
 // app.use('/user', checkJWT, userRoutes);
 
 // Master routes. 
-app.use('/user', [checkUser, checkPassword], userRoutes);
-app.use('/movie', movieRoutes);
-app.use('/order', [checkUser, checkPassword], orderRoutes);
+app.use('/users', [checkUser, checkPassword], userRoutes);
+app.use('/movies', movieRoutes);
+app.use('/orders', [checkUser, checkPassword], orderRoutes);
 
 // Start server
 app.listen(port, () => {
