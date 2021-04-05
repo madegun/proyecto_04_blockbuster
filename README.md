@@ -115,15 +115,15 @@ This endpoint does the same that createUserAdmin, but it will create a new user 
 
 #### POST /user
 
-This endpoint return a list both regular and admin users currently in the database.
+This endpoint returns a list both regular and admin users currently in the database.
 
 #### POST /user/[id]
 
-This endpoints retrieve information about a specific user based on their id.
+This endpoints retrieves information about a specific user based on their id.
 
 #### DELETE /user/[id]
 
-This endpoint delete from db a specific user based on its id.
+This endpoint deletes from db a specific user based on its id.
 
 </details>
 
