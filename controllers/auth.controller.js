@@ -17,10 +17,10 @@ export const authController = {
             const queryUser = await user.findOne({ email: email });
 
             if (!queryUser) {
-                return res.send({ message: "User is not registered (email)" });
+                return res.send({ message: "Incorrect password or email [email]" });
             }
             if (!Bcryp.compareSync(password, queryUser.password)) {
-                return res.send({ message: "Incorrect password" });
+                return res.send({ message: "Incorrect password or email [password]" });
             };
 
             const payload = {
