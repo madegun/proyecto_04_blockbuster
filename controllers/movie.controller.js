@@ -5,16 +5,22 @@ import array2D from '../utils/array2D.js';
 export const movieController = {
     // List all movies in db
     listMovies: async (req, res) => {
-
-        const resultsMovies = await movie.find();
-        res.json(resultsMovies);
+        try {
+            const resultsMovies = await movie.find();
+            res.json(resultsMovies);
+        } catch (error) {
+            res.status(400).send({ message: error.message });
+        }
     },
 
     findMovieById: async (req, res) => {
-
-        const queryId = req.params.id;
-        const result = await movie.findById(queryId);
-        res.json(result);
+        try {
+            const queryId = req.params.id;
+            const result = await movie.findById(queryId);
+            res.json(result);
+        } catch (error) {
+            res.status(400).send({ message: error.message });
+        }
     },
 
     // This method more than one search terms in the url.
