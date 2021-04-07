@@ -7,30 +7,49 @@ import { request } from 'express';
 // This controller groups all methods related to users.
 export const userController = {
     listUsers: async (req, res) => {
-        const resUsers = await user.find();
-        res.json(resUsers);
+
+        try {
+            const resUsers = await user.find();
+            res.json(resUsers);
+        } catch (error) {
+            res.status(400).send({ message: error.message });
+        }
+
     },
 
     findUser: async (req, res) => {
-        const query = req.params.id;
-        const resUser = await user.findById(query);
-        res.json(resUser)
+
+        try {
+            const query = req.params.id;
+            const resUser = await user.findById(query);
+            res.json(resUser);
+        } catch (error) {
+            res.status(400).send({ message: error.message });
+        }
+
     },
 
     viewUserProfile: async (req, res) => {
-        const queryBody = req.body.email;
 
-        // We can use de req object that we modified in checkUser
-        const queryToken = req.userChecked;
+        try {
+            const queryBody = req.body.email;
 
-        if (queryToken.email !== queryBody) {
-            displayGandalf(req, res);
-        } else {
-            const userProfile = await user.findOne({ "email": queryBody });
-            const orders = await order.find({ "userId": userProfile._id });
-            const fullResult = { "profile": userProfile, "orders": orders };
-            res.json(fullResult);
+            // We can use de req object that we modified in checkUser
+            const queryToken = req.userChecked;
+
+            if (queryToken.email !== queryBody) {
+                displayGandalf(req, res);
+            } else {
+                const userProfile = await user.findOne({ "email": queryBody });
+                const orders = await order.find({ "userId": userProfile._id });
+                const fullResult = { "profile": userProfile, "orders": orders };
+                res.json(fullResult);
+            }
+        } catch (error) {
+
+            res.status(400).send({ message: error.message });
         }
+
     },
 
     // Create user with role USER.

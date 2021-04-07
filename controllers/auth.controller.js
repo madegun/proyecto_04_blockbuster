@@ -33,7 +33,7 @@ export const authController = {
             res.json({ token });
         } catch (error) {
             console.log("Something was wrong during authentication");
-            res.status(400).send(error.message);
+            res.status(400).send({ message: error.message });
 
         }
     }
