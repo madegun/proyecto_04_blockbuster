@@ -4,10 +4,9 @@
 
 90's videoclub API rest using **nodejs**, **express**, **mongoose** and **mongodb**. It has been built using **MVC** pattern. Basic **CRUD** operations are implemented.
 
-![screenshot](https://user-images.githubusercontent.com/65553496/113405929-e9226180-93aa-11eb-89a6-478d276f066b.png | width=50)
-Screenshoot using the app with Postman
-
-![postman_screenshot_3](https://user-images.githubusercontent.com/65553496/114618816-183daa80-9caa-11eb-9596-96a0fa127ffc.png | width=100)
+<img src="https://user-images.githubusercontent.com/65553496/113405929-e9226180-93aa-11eb-89a6-478d276f066b.png" width=100% height=100%>
+<img src="https://user-images.githubusercontent.com/65553496/114618816-183daa80-9caa-11eb-9596-96a0fa127ffc.png" width=100% height=100%>
+Some screenshots using Postman
 
 ### Main Endpoints
 
