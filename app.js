@@ -14,6 +14,7 @@ import dotenv from 'dotenv';
 import checkUser from './middlewares/checkUser.js';
 import checkPassword from './middlewares/checkPassword.js';
 
+import cors from 'cors';
 // Init express
 const app = express();
 
@@ -22,6 +23,7 @@ dotenv.config();
 
 // Able to receive JSON on body request
 app.use(express.json());
+app.use(cors());
 
 // App port
 const port = 3000;
@@ -45,9 +47,9 @@ app.use('/auth', authRoutes);
 // app.use('/user', checkJWT, userRoutes);
 
 // Master routes. 
-app.use('/user', [checkUser, checkPassword], userRoutes);
-app.use('/movie', movieRoutes);
-app.use('/order', [checkUser, checkPassword], orderRoutes);
+app.use('/users', [checkUser, checkPassword], userRoutes);
+app.use('/movies', movieRoutes);
+app.use('/orders', [checkUser, checkPassword], orderRoutes);
 
 // Start server
 app.listen(port, () => {

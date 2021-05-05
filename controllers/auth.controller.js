@@ -6,20 +6,21 @@ import Bcryp from 'bcrypt';
 export const authController = {
     auth: async (req, res) => {
 
-        const username = req.body.username
-        const email = req.body.email;
-        const password = req.body.password;
-
-        // Generating JWT IF user is ALREADY registered (and the password is valid)
-        // Note that we can't use checkUser middleware in this part because we have not yet generated the token.
         try {
+            const username = req.body.username
+            const email = req.body.email;
+            const password = req.body.password;
+
+            // Generating JWT IF user is ALREADY registered (and the password is valid)
+            // Note that we can't use checkUser middleware in this part because we have not yet generated the token.
+
             const queryUser = await user.findOne({ email: email });
 
             if (!queryUser) {
-                return res.send({ message: "User is not registered (email)" });
+                return res.send({ message: "Incorrect password or email [email]" });
             }
             if (!Bcryp.compareSync(password, queryUser.password)) {
-                return res.send({ message: "Incorrect password" });
+                return res.send({ message: "Incorrect password or email [password]" });
             };
 
             const payload = {
@@ -31,9 +32,9 @@ export const authController = {
 
             res.json({ token });
         } catch (error) {
-            console.log(error);
-            res.send("Something was wrong");
-        }
+            console.log("Something was wrong during authentication");
+            res.status(400).send({ message: error.message });
 
+        }
     }
 }
