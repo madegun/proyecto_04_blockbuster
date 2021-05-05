@@ -18,7 +18,7 @@ export const signupController = {
 
             // Check if email has been already registered.
             if (userdb) {
-                res.send("User already exists")
+                res.status(409).send("User already exists")
             } else {
                 const newUser = {
                     username: username,
