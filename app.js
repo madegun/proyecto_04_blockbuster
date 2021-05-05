@@ -14,6 +14,7 @@ import dotenv from 'dotenv';
 import checkUser from './middlewares/checkUser.js';
 import checkPassword from './middlewares/checkPassword.js';
 
+import cors from 'cors';
 // Init express
 const app = express();
 
@@ -22,6 +23,7 @@ dotenv.config();
 
 // Able to receive JSON on body request
 app.use(express.json());
+app.use(cors());
 
 // App port
 const port = 3000;
