@@ -26,19 +26,7 @@ export const movieController = {
     // This method more than one search terms in the url.
     findMovieByTitle: async (req, res) => {
 
-        // search for each term.
         const searchTerms = req.params.title.split(" "), regex = searchTerms.join("|");
-
-
-        // Consulta que funciona en compass. Hay que hacerlo dinamico y con regex
-        // const results = await movie.find({ title: { $in: ["Matrix", "Blade Runner"] } });
-
-        // Only one term
-        // const searchTerm = req.params.title;
-        // const results = await movie.find({ title: { $regex: searchTerm, $options: "$i" } });
-
-
-        const matches = [];
 
         // Where I found this solution: https://stackoverflow.com/questions/35321004/mongodb-query-in-with-regex-array-of-element/35321231
         const results = await movie.find({
@@ -49,6 +37,10 @@ export const movieController = {
         })
 
         // Eventually, matches array will be 2D array
+        // search for each term.
+        // const searchTerms = req.params.title.split(" ");
+        // const matches = [];
+
         // for (const term of searchTerms) {
         //     const match = await movie.find({ title: { $regex: term, $options: "$i" } });
 
@@ -64,19 +56,16 @@ export const movieController = {
     // This method more than one search terms in the url.
     findByCast: async (req, res) => {
 
-        const searchTerms = req.params.cast.split(" ");
-        const matches = [];
+        const searchTerms = req.params.cast.split(" "), regex = searchTerms.join("|");
 
-        // Eventually, matches array will be 2D array
-        for (const term of searchTerms) {
-            const match = await movie.find({ cast: { $regex: term, $options: "$i" } });
+        const results = await movie.find({
+            "cast": {
+                "$regex": regex,
+                "$options": "i"
+            }
+        })
 
-            matches.push(match);
-        }
-
-        const filteredMovies = array2D(matches);
-
-        res.json(filteredMovies);
+        res.json(results);
     },
 
     // This method more than one search terms in the url.
