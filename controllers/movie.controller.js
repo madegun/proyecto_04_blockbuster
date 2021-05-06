@@ -105,8 +105,22 @@ export const movieController = {
             res.send(result);
 
         } catch (error) {
-            res.status(400).send({ message: error.message });
+            res.status(400).send({ message: "Algo fue mal" });
         }
+    },
+    deleteMovie: async (req, res) => {
+        try {
+            const movieId = req.params.id;
 
+            const result = await movie.findById(movieId);
+            if (!result) {
+                res.status(404).send({ message: "Id doesn't exist" });
+            } else {
+                await movie.findByIdAndDelete(movieId);
+                res.status(200).send({ message: "Movie was successfully removed" })
+            }
+        } catch (error) {
+            res.status(404).send({ message: message.error });
+        }
     }
 }

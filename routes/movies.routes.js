@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { movieController } from '../controllers/movie.controller.js';
+import checkAdmin from '../middlewares/checkAdmin.js';
+import checkPassword from '../middlewares/checkPassword.js';
+import checkUser from '../middlewares/checkUser.js';
 
 const movieRoutes = Router();
 
@@ -68,7 +71,7 @@ const movieRoutes = Router();
 movieRoutes.get("/", movieController.listMovies);
 
 /**
- * @swagger
+ * @openapi
  * /movies/id/{id}:
  *  get:
  *      summary: Get the movie by id
@@ -95,6 +98,51 @@ movieRoutes.get("/id/:id", movieController.findMovieById);
 movieRoutes.get("/title/:title", movieController.findMovieByTitle);
 movieRoutes.get("/cast/:cast", movieController.findByCast);
 movieRoutes.get("/genre/:genre", movieController.findByGenre);
+
+/**
+ * @openapi
+ * /movies:
+ *  post:
+ *      summary: Add a new movie to db
+ *      tags: [movies]
+ *      requestBody:
+ *          required: true
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/movie'
+ *      responses:
+ *          200:
+ *              description: the movie was successfully created
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          #ref: '#/components/schemas/movie'
+ *          400:
+ *              description: Some server error
+ */
+// movieRoutes.post("/", checkUser, checkPassword, checkAdmin, movieController.newMovie);
 movieRoutes.post("/", movieController.newMovie);
+
+/**
+ * @openapi
+ * /movies/{id}:
+ *  delete:
+ *      summary: Remove the movie by id
+ *      tags: [movies]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: the movie id
+ *      responses:
+ *          200:
+ *              description: The movie was removed succesfully
+ *          404:
+ *              description: The movie was not found
+ */
+movieRoutes.delete("/:id", movieController.deleteMovie);
 
 export default movieRoutes;
