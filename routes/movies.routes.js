@@ -3,6 +3,9 @@ import { movieController } from '../controllers/movie.controller.js';
 
 const movieRoutes = Router();
 
+
+// Swagger tutorial
+// https://www.youtube.com/watch?v=S8kmHtQeflo&ab_channel=MaksimIvanov
 /**
  * @openapi
  * components:
@@ -32,14 +35,66 @@ const movieRoutes = Router();
  *              id: 605b6485f0f9462918e51952
  *              title: Interstellar
  *              year: 2013
- *              cast: [actor1, actor2]
- *              genre: [genre1, genre2]
+ *              cast: [Matthew McConaughey, Anne Hathaway, Jessica Chastain]
+ *              genre: [Science-Fiction, Drama]
+ */
+
+/**
+ * @openapi
+ * tags:
+ *  name: movies
+ *  description: The movies managing API
+ * 
+ */
+
+/**
+ * @openapi
+ * /movies:
+ *  get:
+ *      summary: Returns the list of all movies
+ *      tags: [movies]
+ *      responses:
+ *          200:
+ *              description: the list of the movies
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items: 
+ *                              $ref: '#/components/schemas/movie'
+ *                              
  */
 
 movieRoutes.get("/", movieController.listMovies);
+
+/**
+ * @swagger
+ * /movies/id/{id}:
+ *  get:
+ *      summary: Get the movie by id
+ *      tags: [movies]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: the movie id
+ *      responses:
+ *          200:
+ *              description: the movie description by id
+ *              contents:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/movie'
+ *          404: 
+ *              description: the movie was not found
+ *          
+ */
 movieRoutes.get("/id/:id", movieController.findMovieById);
 movieRoutes.get("/title/:title", movieController.findMovieByTitle);
 movieRoutes.get("/cast/:cast", movieController.findByCast);
 movieRoutes.get("/genre/:genre", movieController.findByGenre);
+movieRoutes.post("/", movieController.newMovie);
 
 export default movieRoutes;

@@ -17,9 +17,13 @@ export const movieController = {
         try {
             const queryId = req.params.id;
             const result = await movie.findById(queryId);
-            res.json(result);
+            if (!result) {
+                res.status(404).send("Movie not found");
+            }
+            res.send(result);
+            // res.json(result);
         } catch (error) {
-            res.status(400).send({ message: error.message });
+            res.status(404).send({ message: error.message });
         }
     },
 
@@ -84,5 +88,25 @@ export const movieController = {
         const filteredMovies = array2D(matches);
 
         res.json(filteredMovies);
+    },
+    newMovie: async (req, res) => {
+
+        try {
+
+            const newMovie = {
+                title: req.body.title,
+                year: req.body.year,
+                available: req.body.available,
+                cast: req.body.cast,
+                genre: req.body.genre
+            }
+
+            const result = await movie.create(newMovie);
+            res.send(result);
+
+        } catch (error) {
+            res.status(400).send({ message: error.message });
+        }
+
     }
 }
