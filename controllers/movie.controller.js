@@ -101,11 +101,22 @@ export const movieController = {
                 genre: req.body.genre
             }
 
-            const result = await movie.create(newMovie);
-            res.send(result);
+            // Before add the document to mongodb, it is checked the fields ob objetc
+            if (newMovie.title !== undefined
+                && newMovie.year !== undefined
+                && newMovie.available !== undefined
+                && newMovie.cast !== undefined
+                && newMovie.genre !== undefined) {
+
+                const result = await movie.create(newMovie);
+                res.status(201).send(result);
+
+            } else {
+                res.status(400).json("Movie object has not the correct format")
+            }
 
         } catch (error) {
-            res.status(400).send({ message: "Algo fue mal" });
+            res.status(400).send({ message: "Movie was not added" });
         }
     },
     deleteMovie: async (req, res) => {

@@ -36,3 +36,41 @@ describe('/GET /movies/id/:id', () => {
             })
     })
 })
+
+describe('POST /movies', () => {
+    it('respond with 201', done => {
+
+        const data = {
+            title: "testing",
+            year: 2021,
+            available: true,
+            cast: ["test1", "test2"],
+            genre: ["genre1, genre2"]
+        }
+
+        request(app)
+            .post('/movies')
+            .send(data)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end(err => {
+                if (err) return done(err);
+                done();
+            })
+    })
+
+    it('respond with 400 on bad request', done => {
+        const data = {};
+        request(app)
+            .post('/movies')
+            .send(data)
+            .set('Accept', 'application/json')
+            .expect(400)
+            .expect('"Movie object has not the correct format"')
+            .end(err => {
+                if (err) return done(err);
+                done();
+            })
+    })
+})
