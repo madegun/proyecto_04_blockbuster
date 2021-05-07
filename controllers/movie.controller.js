@@ -18,7 +18,7 @@ export const movieController = {
             const queryId = req.params.id;
             const result = await movie.findById(queryId);
             if (!result) {
-                res.status(404).send("Movie not found");
+                res.status(404).json('Movie not found');
             }
             res.send(result);
             // res.json(result);

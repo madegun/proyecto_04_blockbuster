@@ -20,7 +20,6 @@ import cors from 'cors';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
-
 // Options object for SWAGGER
 const options = {
     swaggerDefinition: {
@@ -104,3 +103,5 @@ app.use('/orders', [checkUser, checkPassword], orderRoutes);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
+
+export default app;
