@@ -165,7 +165,7 @@ movieRoutes.delete("/:id", movieController.deleteMovie);
  *            required: true
  *            description: the movie id
  *      responses:
- *          201:
+ *          200:
  *              description: The movie was updated successfully
  *          400:
  *              description: The movie was not updated

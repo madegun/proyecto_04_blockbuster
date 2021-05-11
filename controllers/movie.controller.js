@@ -143,14 +143,15 @@ export const movieController = {
 
             // We check if body is empty. Object.entries return an array with fields. If length === 0, the object is empty, so we don't modify the document
             if (Object.entries(updates).length === 0) {
-                res.status(400).json("Fields are empty")
+                res.status(400).json({ message: "Fields are empty" })
             } else {
                 const object = await movie.findByIdAndUpdate(movieId, updates);
 
                 if (object) {
-                    res.status(201).json("Movie was updated successfully");
+                    // res.status(200).json({ message: "Movie was updated successfully" });
+                    res.status(200).json({ message: "Movie was updated successfully" });
                 } else {
-                    res.status(400).json("Movie not found");
+                    res.status(400).json({ message: "Movie not found" });
                 }
             }
 
