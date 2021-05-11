@@ -238,6 +238,10 @@ Admin users can see all list currently in the database thanks to this endpoint.
 - [express](http://expressjs.com/) - nodejs backend framework
 - [mongodb](https://www.mongodb.com/) - database
 - [mongoose](https://mongoosejs.com/) - object modelling tool
+- [jwtoken](https://jwt.io/) - authentication
+- [bcrypt](https://www.npmjs.com/package/bcrypt) - store the password in db
+- [supertest](https://www.npmjs.com/package/supertest) - testing
+- [swagger](https://swagger.io/) - documentation
 
 ### Tools used during app development
 
