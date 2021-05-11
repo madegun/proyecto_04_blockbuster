@@ -232,6 +232,11 @@ Admin users can see all list currently in the database thanks to this endpoint.
 
 </details>
 
+### Documentation
+
+This project has documentation made with Swagger for some endpoints.
+![swagger_screenshot](https://user-images.githubusercontent.com/65553496/117848961-20c2da00-b284-11eb-8409-4b6728e6b177.png)
+
 ### Tools
 
 - [nodejs](https://nodejs.org/en/) - JavaScript runtime enviroment
