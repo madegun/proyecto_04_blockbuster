@@ -139,10 +139,38 @@ movieRoutes.post("/", movieController.newMovie);
  *            description: the movie id
  *      responses:
  *          200:
- *              description: The movie was removed succesfully
+ *              description: The movie was removed successfully
  *          404:
  *              description: The movie was not found
  */
 movieRoutes.delete("/:id", movieController.deleteMovie);
+
+/**
+ * @openapi
+ * /movies/{id}:
+ *  put:
+ *      summary: Update the movie by id
+ *      tags: [movies]
+ *      requestBody:
+ *          required: true
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/movie'
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: the movie id
+ *      responses:
+ *          201:
+ *              description: The movie was updated successfully
+ *          400:
+ *              description: The movie was not updated
+ *          
+ */
+movieRoutes.put("/:id", movieController.updateMovie);
 
 export default movieRoutes;

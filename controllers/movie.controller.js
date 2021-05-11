@@ -9,7 +9,7 @@ export const movieController = {
             const resultsMovies = await movie.find();
             res.json(resultsMovies);
         } catch (error) {
-            res.status(400).send({ message: error.message });
+            res.status(400).json({ message: error.message });
         }
     },
 
@@ -23,7 +23,7 @@ export const movieController = {
             res.send(result);
             // res.json(result);
         } catch (error) {
-            res.status(404).send({ message: error.message });
+            res.status(404).json({ message: error.message });
         }
     },
 
@@ -101,22 +101,23 @@ export const movieController = {
                 genre: req.body.genre
             }
 
-            // Before add the document to mongodb, it is checked the fields ob objetc
+            // Before add the document to mongodb, object fields are verified. Fields cannot be empty.
+            // cast and genre field are never empty, so length will be checked.
             if (newMovie.title !== undefined
                 && newMovie.year !== undefined
                 && newMovie.available !== undefined
-                && newMovie.cast !== undefined
-                && newMovie.genre !== undefined) {
+                && newMovie.cast.length !== 0
+                && newMovie.genre.length !== 0) {
 
                 const result = await movie.create(newMovie);
-                res.status(201).send(result);
+                res.status(201).json(result);
 
             } else {
                 res.status(400).json("Movie object has not the correct format")
             }
 
         } catch (error) {
-            res.status(400).send({ message: "Movie was not added" });
+            res.status(400).json({ message: "Movie was not added" });
         }
     },
     deleteMovie: async (req, res) => {
@@ -125,13 +126,32 @@ export const movieController = {
 
             const result = await movie.findById(movieId);
             if (!result) {
-                res.status(404).send({ message: "Id doesn't exist" });
+                res.status(404).json({ message: "Id doesn't exist" });
             } else {
                 await movie.findByIdAndDelete(movieId);
-                res.status(200).send({ message: "Movie was successfully removed" })
+                res.status(200).json({ message: "Movie was successfully removed" })
             }
         } catch (error) {
-            res.status(404).send({ message: message.error });
+            res.status(404).json({ message: message.error });
+        }
+    },
+    updateMovie: async (req, res) => {
+
+        try {
+            const movieId = req.params.id;
+            const updates = req.body;
+
+            // We check if body is empty. Object.entries return an array with fields. If length === 0, the object is empty, so we don't modify the document
+            if (Object.entries(updates).length === 0) {
+                res.status(400).json("Fields are empty")
+            } else {
+                await movie.findByIdAndUpdate(movieId, updates);
+
+                res.status(201).json("Movie was updated successfully");
+            }
+
+        } catch (error) {
+            res.status(400).json({ message: error.message })
         }
     }
 }
