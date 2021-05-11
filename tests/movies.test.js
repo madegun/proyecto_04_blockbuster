@@ -12,7 +12,7 @@ it('respond with json containing a list of all movies', done => {
 })
 
 // Testing get
-describe('/GET /movies/id/:id', () => {
+describe('GET /movies/id/:id', () => {
     it('respond with json containing a single movie', done => {
         request(app)
             .get('/movies/id/605b6485f0f9462918e51952')
@@ -71,6 +71,33 @@ describe('POST /movies', () => {
             .end(err => {
                 if (err) return done(err);
                 done();
+            })
+    })
+})
+
+describe('DELETE /movies/:id', () => {
+    it('respond with 200 when movie is deleted', done => {
+        request(app)
+            .delete('/movies/609a42eca5f96d55aae4cefe')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(err => {
+                if (err) return done(err);
+                done();
+            })
+    })
+    it('respond with 404 on bad request', done => {
+        request(app)
+            .delete('/movies/609a37012e0c2240a79833a8')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(404)
+            .end((err) => {
+                if (err) {
+                    return done(err);
+                }
+                done()
             })
     })
 })
