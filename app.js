@@ -19,35 +19,13 @@ import cors from 'cors';
 // https://www.youtube.com/watch?v=apouPYPh_as&ab_channel=BeyondHelloWorld
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import swaggerOptions from './documentation/swagger.options.js'
 
-// Options object for SWAGGER
-const options = {
-    swaggerDefinition: {
-        openapi: "3.0.0",
-        info: {
-            title: "Blockbuster API",
-            version: "1.0.0",
-            description:
-                "This is a simple CRUD API application made with Express and documented with Swagger",
-            license: {
-                name: "MIT",
-                url: "https://spdx.org/licenses/MIT.html",
-            },
-        },
-        servers: [
-            {
-                // In our case, we specified only one server where documentation will be available
-                url: "http://localhost:3000"
-            }
-        ]
-    },
-    // apis: ["app.js"],
-    // This specifies to swagger where it
-    apis: ["./documentation/*.doc.yaml"],
-};
+// App port
+const port = 3000;
 
-// Initialize de swaggerjs doc
-const specs = await swaggerJsdoc(options);
+// Initialize de swaggerjs doc AWAIT is mandatory.
+const specs = await swaggerJsdoc(swaggerOptions(port));
 
 // Init express
 const app = express();
@@ -62,9 +40,6 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 
-// App port
-const port = 3000;
-
 // Connection to mongodb
 const urlDB = process.env.URL_DB;
 const portDB = process.env.PORT_DB;
@@ -76,23 +51,10 @@ connectDatabase(urlDB, portDB, nameDB);
 app.use(infoMiddleware);
 
 // Single signup endpoint. No middlewares needed.
-/**
- * 
- * @openapi
- *  /signup
- *      post:
- *          responses:
- *              200:
- *                  description:
- *                      Welcome
- * 
- */
 app.use('/signup', signupRoutes);
 
 // Once you have registered, you can get a JWT.
 app.use('/auth', authRoutes);
-
-// app.use('/user', checkJWT, userRoutes);
 
 // Master routes. 
 app.use('/users', [checkUser, checkPassword], userRoutes);
