@@ -158,5 +158,32 @@ export const movieController = {
         } catch (error) {
             res.status(400).json({ message: error.message })
         }
+    },
+
+
+    // Para el modelo de 3 capas 
+    getAllMovies: async () => {
+        console.log("In controller ##########");
+
+        try {
+            // DB query would be the entire logic in this case
+            const resultQuery = await movie.find();
+            return resultQuery;
+        } catch (error) {
+            return error.message;
+        }
+    },
+    getMovieById: async (id) => {
+        console.log("In controller ##########");
+        console.log(id);
+
+        try {
+            const resultQuery = await movie.findById(id);
+            return resultQuery
+
+        } catch (error) {
+
+            return error.message;
+        }
     }
 }

@@ -4,6 +4,9 @@ import checkAdmin from '../middlewares/checkAdmin.js';
 import checkPassword from '../middlewares/checkPassword.js';
 import checkUser from '../middlewares/checkUser.js';
 
+// Lo importamos al modo antiguo, que es como lo usan en eCustoms
+import { getAllMoviesService, getMovieByIdService } from '../services/moviesServices.js';
+
 const movieRoutes = Router();
 
 
@@ -67,7 +70,6 @@ const movieRoutes = Router();
  *                              $ref: '#/components/schemas/movie'
  *                              
  */
-
 movieRoutes.get("/", movieController.listMovies);
 
 /**
@@ -172,5 +174,10 @@ movieRoutes.delete("/:id", movieController.deleteMovie);
  *          
  */
 movieRoutes.put("/:id", movieController.updateMovie);
+
+
+// Implementación en 3 capas( Router => Service (Express) => Controller (Lógica))
+movieRoutes.get("/service", getAllMoviesService);
+movieRoutes.post("/service", getMovieByIdService);
 
 export default movieRoutes;
