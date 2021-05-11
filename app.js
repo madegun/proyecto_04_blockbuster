@@ -43,7 +43,7 @@ const options = {
     },
     // apis: ["app.js"],
     // This specifies to swagger where it
-    apis: ["./routes/*.js"],
+    apis: ["./documentation/*.doc.yaml"],
 };
 
 // Initialize de swaggerjs doc
