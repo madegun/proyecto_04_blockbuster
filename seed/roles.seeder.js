@@ -11,7 +11,10 @@ const portDB = process.env.PORT_DB;
 const nameDB = process.env.NAME_DB;
 
 connectDatabase(urlDB, portDB, nameDB);
-// connectDatabase('localhost', 27017, 'blockbuster_seed');
+
+mongoose.connection.dropCollection('roles', (err, result) => {
+    console.log("*** roles collection deleted ***");
+})
 
 const roles = [
     new Role({
@@ -27,6 +30,7 @@ for (let i = 0; i < roles.length; i++) {
     roles[i].save((err, result) => {
         done++;
         if (done === roles.length) {
+            console.log("Roles seed has been planted!");
             exit();
         }
     });

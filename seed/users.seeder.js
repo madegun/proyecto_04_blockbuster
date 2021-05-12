@@ -1,8 +1,11 @@
 import User from '../models/user.model.js';
+import Role from '../models/role.model.js';
+
 import connectDatabase from '../config/connection_db.js';
 import dotenv from 'dotenv';
 
 import mongoose from 'mongoose';
+
 
 dotenv.config();
 
@@ -11,15 +14,13 @@ const portDB = process.env.PORT_DB;
 const nameDB = process.env.NAME_DB;
 
 connectDatabase(urlDB, portDB, nameDB);
-// connectDatabase('localhost', 27017, 'blockbuster_seed');
 
-import Role from '../models/role.model.js';
+mongoose.connection.dropCollection('users', (err, result) => {
+    console.log("*** users collection deleted ***");
+})
 
 const admin = await Role.findOne({ role: "admin" });
 const user = await Role.findOne({ role: "user" });
-
-// console.log(admin.id);
-// console.log(user.id);
 
 const users = [
     new User({
@@ -41,6 +42,7 @@ for (let i = 0; i < users.length; i++) {
     users[i].save((err, result) => {
         done++;
         if (done === users.length) {
+            console.log("User seed has been planted!");
             exit();
         }
     });

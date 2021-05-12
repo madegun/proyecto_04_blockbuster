@@ -15,7 +15,7 @@ it('respond with json containing a list of all movies', done => {
 describe('GET /movies/id/:id', () => {
     it('respond with json containing a single movie', done => {
         request(app)
-            .get('/movies/id/605b6485f0f9462918e51952')
+            .get('/movies/id/609bbe42b1ad86229ea3de65')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200, done);
@@ -110,7 +110,7 @@ describe('PUT /movies/:id', () => {
         const data = { year: 2076 }
 
         request(app)
-            .put('/movies/605b6485f0f9462918e51952')
+            .put('/movies/609bbe42b1ad86229ea3de65')
             .send(data)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
