@@ -13,23 +13,34 @@ const nameDB = process.env.NAME_DB;
 connectDatabase(urlDB, portDB, nameDB);
 // connectDatabase('localhost', 27017, 'blockbuster_seed');
 
-const movies = [
-    new User({
+import Role from '../models/role.model.js';
 
+const admin = await Role.findOne({ role: "admin" });
+const user = await Role.findOne({ role: "user" });
+
+// console.log(admin.id);
+// console.log(user.id);
+
+const users = [
+    new User({
+        username: "rubenfs",
+        email: "rubenfs@hotmail.com",
+        password: "1234",
+        roleId: admin.id
     }),
     new User({
-
+        username: "alex",
+        email: "alex@hotmail.com",
+        password: "1234",
+        roleId: user.id
     }),
-    new User({
-
-    })
 ];
 
 let done = 0;
-for (let i = 0; i < movies.length; i++) {
-    movies[i].save((err, result) => {
+for (let i = 0; i < users.length; i++) {
+    users[i].save((err, result) => {
         done++;
-        if (done === movies.length) {
+        if (done === users.length) {
             exit();
         }
     });
