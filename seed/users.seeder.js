@@ -1,4 +1,4 @@
-import Movie from '../models/movie.model.js';
+import User from '../models/user.model.js';
 import connectDatabase from '../config/connection_db.js';
 import dotenv from 'dotenv';
 
@@ -13,24 +13,16 @@ const nameDB = process.env.NAME_DB;
 connectDatabase(urlDB, portDB, nameDB);
 // connectDatabase('localhost', 27017, 'blockbuster_seed');
 
-
-
 const movies = [
-    new Movie({
-        title: "Interstellar",
-        year: 2014,
-        available: true,
-        cast: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
-        genre: ["science fiction", "drama"]
-    }),
-    new Movie({
-        title: "Blade Runner",
-        year: 1982,
-        available: true,
-        cast: ["Harrison Ford", "Sean Young", "Daryl Hannah", "Rutger Hauer"],
-        genre: ["science fiction", "drama"]
-    })
+    new User({
 
+    }),
+    new User({
+
+    }),
+    new User({
+
+    })
 ];
 
 let done = 0;
