@@ -13,6 +13,6 @@ const orderSchema = mongoose.Schema({
     endDate: String,
 })
 
-const order = mongoose.model('orders', orderSchema)
+const Order = mongoose.model('orders', orderSchema)
 
-export default order;
+export default Order;

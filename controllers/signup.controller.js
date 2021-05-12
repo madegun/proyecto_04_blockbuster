@@ -1,4 +1,4 @@
-import user from '../models/user.model.js';
+import User from '../models/user.model.js';
 import Bcryp from 'bcrypt';
 
 // This controller only has one method. It creates a user with user role, from body data.
@@ -14,7 +14,7 @@ export const signupController = {
             const password = Bcryp.hashSync(req.body.password, 4);
 
             // Search if user exists in db, base on email.
-            const userdb = await user.findOne({ email: email });
+            const userdb = await User.findOne({ email: email });
 
             // Check if email has been already registered.
             if (userdb) {
@@ -27,7 +27,7 @@ export const signupController = {
                     password: password
                 }
 
-                await user.create(newUser);
+                await User.create(newUser);
                 res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
             }
         } catch (error) {

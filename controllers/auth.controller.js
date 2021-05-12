@@ -14,7 +14,7 @@ export const authController = {
             // Generating JWT IF user is ALREADY registered (and the password is valid)
             // Note that we can't use checkUser middleware in this part because we have not yet generated the token.
 
-            const queryUser = await user.findOne({ email: email });
+            const queryUser = await User.findOne({ email: email });
 
             if (!queryUser) {
                 return res.send({ message: "Incorrect password or email [email]" });

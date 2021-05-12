@@ -1,5 +1,5 @@
-import order from '../models/order.model.js';
-import user from '../models/user.model.js';
+import Order from '../models/order.model.js';
+import User from '../models/user.model.js';
 
 // This controller groups all methods related to orders
 export const orderController = {
@@ -8,7 +8,7 @@ export const orderController = {
     listOrders: async (req, res) => {
 
         try {
-            const resOrders = await order.find();
+            const resOrders = await Order.find();
             res.json(resOrders);
         } catch (error) {
             res.status(400).send({ message: error.message });
@@ -33,7 +33,7 @@ export const orderController = {
                 return endDate;
             };
 
-            const objectUser = await user.findOne({ "email": userEmail });
+            const objectUser = await User.findOne({ "email": userEmail });
 
             const newOrder = {
                 userId: objectUser._id,
@@ -42,7 +42,7 @@ export const orderController = {
                 endDate: getEndDate(),
             }
 
-            await order.create(newOrder);
+            await Order.create(newOrder);
             res.json(`Order ${JSON.stringify(newOrder)} was created`);
         } catch (error) {
             res.status(400).send({ message: error.message });
@@ -54,8 +54,8 @@ export const orderController = {
 
         try {
             const userEmail = req.body.email;
-            const objectUser = await user.findOne({ "email": userEmail });
-            const orders = await order.find({ "userId": objectUser._id });
+            const objectUser = await User.findOne({ "email": userEmail });
+            const orders = await Order.find({ "userId": objectUser._id });
             res.json(orders);
         } catch (error) {
             res.status(400).send({ message: error.message });

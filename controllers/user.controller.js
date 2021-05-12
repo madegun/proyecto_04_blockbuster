@@ -1,5 +1,5 @@
-import order from '../models/order.model.js';
-import user from '../models/user.model.js';
+import Order from '../models/order.model.js';
+import User from '../models/user.model.js';
 import displayGandalf from '../utils/displayGandalf.js';
 import Bcryp from 'bcrypt';
 import { request } from 'express';
@@ -9,7 +9,7 @@ export const userController = {
     listUsers: async (req, res) => {
 
         try {
-            const resUsers = await user.find();
+            const resUsers = await User.find();
             res.json(resUsers);
         } catch (error) {
             res.status(400).send({ message: error.message });
@@ -21,7 +21,7 @@ export const userController = {
 
         try {
             const query = req.params.id;
-            const resUser = await user.findById(query);
+            const resUser = await User.findById(query);
             res.json(resUser);
         } catch (error) {
             res.status(400).send({ message: error.message });
@@ -40,8 +40,8 @@ export const userController = {
             if (queryToken.email !== queryBody) {
                 displayGandalf(req, res);
             } else {
-                const userProfile = await user.findOne({ "email": queryBody });
-                const orders = await order.find({ "userId": userProfile._id });
+                const userProfile = await User.findOne({ "email": queryBody });
+                const orders = await Order.find({ "userId": userProfile._id });
                 const fullResult = { "profile": userProfile, "orders": orders };
                 res.json(fullResult);
             }
@@ -61,7 +61,7 @@ export const userController = {
         const password = Bcryp.hashSync(request.body.password, 4);
 
         // Search if user already exists in db.
-        const userdb = await user.findOne({ email: email });
+        const userdb = await User.findOne({ email: email });
 
         // If user does not exist, create it.
         if (userdb) {
@@ -73,7 +73,7 @@ export const userController = {
                 roleId: roleId,
                 password: password
             }
-            await user.create(newUser);
+            await User.create(newUser);
             res.send(`User ${JSON.stringify(newUser)} was added. Role: USER`);
         }
     },
@@ -86,7 +86,7 @@ export const userController = {
         const password = Bcryp.hashSync(req.body.newUserPassword, 4);
 
         // Search if user already exists in db.
-        const userdb = await user.findOne({ email: email });
+        const userdb = await User.findOne({ email: email });
 
         // If user does not exist, create it.
         if (userdb) {
@@ -99,7 +99,7 @@ export const userController = {
                 password: password
             }
 
-            await user.create(newUser);
+            await User.create(newUser);
             res.send(`User ${JSON.stringify(newUser)} was added. Role: ADMIN`);
         }
     },
@@ -107,7 +107,7 @@ export const userController = {
     // Delete user by Id
     deleteUser: async (req, res) => {
 
-        await user.findByIdAndDelete(req.params.id);
+        await User.findByIdAndDelete(req.params.id);
         res.send(`User with id ${JSON.stringify(req.params.id)} was deleted`)
     }
 }

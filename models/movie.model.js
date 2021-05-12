@@ -8,6 +8,6 @@ const movieSchema = mongoose.Schema({
     genre: Array,
 })
 
-const movie = mongoose.model('movies', movieSchema)
+const Movie = mongoose.model('movies', movieSchema)
 
-export default movie;
+export default Movie;

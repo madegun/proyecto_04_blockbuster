@@ -1,4 +1,4 @@
-import movie from '../models/movie.model.js';
+import Movie from '../models/movie.model.js';
 import array2D from '../utils/array2D.js';
 
 // This controller groups all methods related with movies.
@@ -6,7 +6,7 @@ export const movieController = {
     // List all movies in db
     listMovies: async (req, res) => {
         try {
-            const resultsMovies = await movie.find();
+            const resultsMovies = await Movie.find();
             res.json(resultsMovies);
         } catch (error) {
             res.status(400).json({ message: error.message });
@@ -16,7 +16,7 @@ export const movieController = {
     findMovieById: async (req, res) => {
         try {
             const queryId = req.params.id;
-            const result = await movie.findById(queryId);
+            const result = await Movie.findById(queryId);
             if (!result) {
                 res.status(404).json('Movie not found');
             }
@@ -33,7 +33,7 @@ export const movieController = {
         const searchTerms = req.params.title.split(" "), regex = searchTerms.join("|");
 
         // Where I found this solution: https://stackoverflow.com/questions/35321004/mongodb-query-in-with-regex-array-of-element/35321231
-        const results = await movie.find({
+        const results = await Movie.find({
             "title": {
                 "$regex": regex,
                 "$options": "i"
@@ -46,7 +46,7 @@ export const movieController = {
         // const matches = [];
 
         // for (const term of searchTerms) {
-        //     const match = await movie.find({ title: { $regex: term, $options: "$i" } });
+        //     const match = await Movie.find({ title: { $regex: term, $options: "$i" } });
 
         //     matches.push(match);
         // }
@@ -62,7 +62,7 @@ export const movieController = {
 
         const searchTerms = req.params.cast.split(" "), regex = searchTerms.join("|");
 
-        const results = await movie.find({
+        const results = await Movie.find({
             "cast": {
                 "$regex": regex,
                 "$options": "i"
@@ -79,8 +79,8 @@ export const movieController = {
 
         // Eventually, matches array will be 2D array
         for (const term of searchTerms) {
-            const match = await movie.find({ genre: { $regex: term, $options: "$i" } });
-            // const match = await movie.findOne({ genre: { $regex: term, $options: "$i" } }).lean();
+            const match = await Movie.find({ genre: { $regex: term, $options: "$i" } });
+            // const match = await Movie.findOne({ genre: { $regex: term, $options: "$i" } }).lean();
 
             matches.push(match);
         }
@@ -109,7 +109,7 @@ export const movieController = {
                 && newMovie.cast.length !== 0
                 && newMovie.genre.length !== 0) {
 
-                const result = await movie.create(newMovie);
+                const result = await Movie.create(newMovie);
                 res.status(201).json(result);
 
             } else {
@@ -124,11 +124,11 @@ export const movieController = {
         try {
             const movieId = req.params.id;
 
-            const result = await movie.findById(movieId);
+            const result = await Movie.findById(movieId);
             if (!result) {
                 res.status(404).json({ message: "Id doesn't exist" });
             } else {
-                await movie.findByIdAndDelete(movieId);
+                await Movie.findByIdAndDelete(movieId);
                 res.status(200).json({ message: "Movie was successfully removed" })
             }
         } catch (error) {
@@ -145,7 +145,7 @@ export const movieController = {
             if (Object.entries(updates).length === 0) {
                 res.status(400).json({ message: "Fields are empty" })
             } else {
-                const object = await movie.findByIdAndUpdate(movieId, updates);
+                const object = await Movie.findByIdAndUpdate(movieId, updates);
 
                 if (object) {
                     // res.status(200).json({ message: "Movie was updated successfully" });
@@ -167,7 +167,7 @@ export const movieController = {
 
         try {
             // DB query would be the entire logic in this case
-            const resultQuery = await movie.find();
+            const resultQuery = await Movie.find();
             return resultQuery;
         } catch (error) {
             return error.message;
@@ -178,7 +178,7 @@ export const movieController = {
         console.log(id);
 
         try {
-            const resultQuery = await movie.findById(id);
+            const resultQuery = await Movie.findById(id);
             return resultQuery
 
         } catch (error) {
