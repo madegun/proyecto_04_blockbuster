@@ -8,6 +8,22 @@
 <img src="https://user-images.githubusercontent.com/65553496/114618816-183daa80-9caa-11eb-9596-96a0fa127ffc.png" width=100% height=100%>
 Some screenshots using Postman
 
+### Setup
+
+Download or clone de repository. After that, run:
+
+```
+npm install
+```
+
+Database configuration is in config/connection_db.js file. Change as many parameters as neccessary.
+
+After dependencies had been installed, run the seeds as follows:
+
+```
+npm run seed
+```
+
 ### Main Endpoints
 
 <details>
